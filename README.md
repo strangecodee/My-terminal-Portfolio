@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## technology stack
 
 This project is built with:
@@ -64,3 +65,6 @@ pnpm run dev
 ```shell
 pnpm run build
 ```
+=======
+# My-terminal-Portfolio
+>>>>>>> ddef01e10f59e3fb8ee34a50540491c621e19ba0
