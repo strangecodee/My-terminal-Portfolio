@@ -1,0 +1,4 @@
+onlyBuiltDependencies:
+  - '@metagptx/vite-plugin-source-locator'
+  - '@swc/core'
+  - esbuild
