@@ -5,6 +5,7 @@ export interface TerminalState {
   isProcessingCommand: boolean;
   theme: "light" | "dark";
   soundEnabled: boolean;
+  currentHistoryIndex: number;
 }
 
 export interface CommandOutput {
@@ -29,6 +30,8 @@ export interface Project {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
+  github?: string;
+  demo?: string;
   imageUrl?: string;
   status: "completed" | "in-progress" | "planned";
   startDate: string;

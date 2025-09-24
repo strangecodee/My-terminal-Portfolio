@@ -56,7 +56,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
             prev <= 0 ? suggestions.length - 1 : prev - 1
           );
         } else {
-          if (state.historyIndex === -1 && input.trim()) {
+          if (state.currentHistoryIndex === -1 && input.trim()) {
             setDraftInput(input);
           }
           const prevCommand = getPreviousCommand();
@@ -106,11 +106,15 @@ export const CommandLine: React.FC<CommandLineProps> = ({
         setShowSuggestions(false);
         break;
 
-      case "Control":
-        if (e.ctrlKey && e.key === "l") {
+      case "l":
+        if (e.ctrlKey) {
           e.preventDefault();
           onExecuteCommand("clear");
-        } else if (e.ctrlKey && e.key === "c") {
+        }
+        break;
+
+      case "c":
+        if (e.ctrlKey) {
           e.preventDefault();
           setInput("");
           setDraftInput("");
@@ -128,7 +132,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
     setIsTyping(true);
     setTimeout(() => setIsTyping(false), 150);
 
-    if (state.historyIndex === -1) {
+    if (state.currentHistoryIndex === -1) {
       setDraftInput(value);
     }
 
@@ -249,7 +253,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
               {input.length}
             </span>
           )}
-          {state.historyIndex >= 0 && (
+          {state.currentHistoryIndex >= 0 && (
             <span
               className={`text-xs px-1.5 sm:px-2 py-1 rounded-full transition-all duration-300 animate-scale-in ${
                 state.theme === "dark"
@@ -257,7 +261,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
                   : "bg-ubuntu-purple/10 text-ubuntu-purple border border-ubuntu-purple/30"
               }`}
             >
-              ↑{state.commandHistory.length - state.historyIndex}
+              ↑{state.commandHistory.length - state.currentHistoryIndex}
             </span>
           )}
           {isTyping && (
@@ -273,7 +277,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
       {/* Enhanced responsive suggestions dropdown */}
       {showSuggestions && suggestions.length > 0 && (
         <div
-          className={`absolute top-full left-0 right-0 mt-2 rounded-lg shadow-2xl z-50 backdrop-blur-md border animate-slide-down-bounce overflow-hidden ${
+          className={`absolute bottom-full left-0 right-0 mb-2 rounded-lg shadow-2xl z-50 backdrop-blur-md border animate-slide-up-bounce overflow-hidden ${
             state.theme === "dark"
               ? "bg-gray-800/95 border-gray-600/50 shadow-black/50"
               : "bg-white/95 border-ubuntu-border/50 shadow-black/10"

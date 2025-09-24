@@ -246,6 +246,8 @@ export const certifications = [
     issuer: "Amazon Web Services",
     date: "December 2024",
     credentialId: "AWS-SAA-2024-AM",
+    description:
+      "Demonstrated expertise in designing and deploying scalable, highly available, and fault-tolerant systems on AWS. Proficient in AWS services including EC2, S3, RDS, VPC, and security best practices.",
     icon: "☁️",
     color: "text-orange-400",
   },
@@ -254,6 +256,8 @@ export const certifications = [
     issuer: "Google Cloud",
     date: "September 2024",
     credentialId: "GCP-ACE-2024-AM",
+    description:
+      "Skilled in deploying applications, monitoring operations, and managing enterprise solutions on Google Cloud Platform. Experienced with Compute Engine, Cloud Storage, and networking services.",
     icon: "🌐",
     color: "text-blue-400",
   },

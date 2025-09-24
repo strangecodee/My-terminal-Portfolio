@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CommandOutput } from "../types/terminal";
+import type { CommandOutput } from "../types/terminal";
 import { useTerminal } from "../hooks/useTerminal";
 
 interface OutputDisplayProps {

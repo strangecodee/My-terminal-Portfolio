@@ -1,0 +1,27 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background optimized for dark mode -->
+  <rect width="32" height="32" rx="2" fill="#0f172a"/>
+  
+  <!-- Bright teal gear for visibility -->
+  <g transform="translate(16, 16)">
+    <!-- Outer circle -->
+    <circle r="12" fill="none" stroke="#14b8a6" stroke-width="2.5"/>
+    
+    <!-- Gear teeth with better visibility -->
+    <g stroke="#14b8a6" stroke-width="2.5" stroke-linecap="round">
+      <line x1="12" y1="0" x2="15" y2="0"/>
+      <line x1="0" y1="12" x2="0" y2="15"/>
+      <line x1="-12" y1="0" x2="-15" y2="0"/>
+      <line x1="0" y1="-12" x2="0" y2="-15"/>
+    </g>
+    
+    <!-- Inner bright circle -->
+    <circle r="4" fill="#14b8a6" opacity="0.3"/>
+  </g>
+  
+  <!-- High contrast dots -->
+  <circle cx="6" cy="6" r="1" fill="#14b8a6"/>
+  <circle cx="26" cy="6" r="1" fill="#14b8a6"/>
+  <circle cx="6" cy="26" r="1" fill="#14b8a6"/>
+  <circle cx="26" cy="26" r="1" fill="#14b8a6"/>
+</svg>

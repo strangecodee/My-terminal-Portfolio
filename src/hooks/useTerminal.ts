@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { TerminalState, CommandOutput } from "../types/terminal";
+import type { TerminalState, CommandOutput } from "../types/terminal";
 
 const initialState: TerminalState = {
   outputHistory: [],
@@ -7,6 +7,8 @@ const initialState: TerminalState = {
   currentHistoryIndex: -1,
   isProcessingCommand: false,
   theme: "dark",
+  soundEnabled: false,
+  currentDirectory: "~/devops-portfolio",
 };
 
 export const useTerminal = () => {

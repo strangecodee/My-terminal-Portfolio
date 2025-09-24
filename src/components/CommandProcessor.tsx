@@ -1,5 +1,5 @@
 import React from "react";
-import { CommandResult } from "../types/terminal";
+import type { CommandResult } from "../types/terminal";
 
 // Import DevOps command components
 import {
@@ -183,6 +183,9 @@ export class CommandProcessor {
           break;
 
         // Portfolio Commands (existing)
+        case "welcome":
+          output = this.getWelcomeOutput();
+          break;
         case "help":
           output = this.getHelpOutput();
           break;
@@ -241,7 +244,7 @@ export class CommandProcessor {
       }
 
       const executionTime = Date.now() - startTime;
-      return { output, executionTime };
+      return { output, executionTime, success: true };
     } catch (error) {
       const executionTime = Date.now() - startTime;
       return {
@@ -257,6 +260,7 @@ export class CommandProcessor {
           </div>
         ),
         executionTime,
+        success: false,
       };
     }
   }
@@ -265,17 +269,21 @@ export class CommandProcessor {
     const subCommand = args[0];
 
     switch (subCommand) {
-      case "ps":
+      case "ps": {
         return <DockerPsCommand />;
-      case "images":
+      }
+      case "images": {
         return <DockerImagesCommand />;
-      case "logs":
+      }
+      case "logs": {
         return <DockerLogsCommand container={args[1]} />;
-      case "build":
+      }
+      case "build": {
         const imageTag = args.find((arg) => arg.startsWith("-t"))
           ? args[args.indexOf("-t") + 1]
           : "my-app:latest";
         return <DockerBuildCommand image={imageTag} />;
+      }
       case "exec":
         return (
           <div className="space-y-2">
@@ -1224,6 +1232,96 @@ export class CommandProcessor {
                 ||----w |
                 ||     ||`}
         </pre>
+      </div>
+    );
+  }
+
+  private getWelcomeOutput(): React.ReactNode {
+    return (
+      <div className="space-y-4">
+        <pre className="text-teal-400 text-xs leading-tight">
+          {asciiArt.welcome}
+        </pre>
+        <div className="space-y-3">
+          <div className="text-blue-400 font-semibold text-lg">
+            👋 Welcome to My DevOps Portfolio!
+          </div>
+          <div className="text-gray-300 leading-relaxed">
+            Welcome to my interactive DevOps portfolio! This terminal interface
+            showcases my expertise in modern DevOps practices, cloud
+            infrastructure, and automation tools.
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div className="space-y-2">
+              <div className="text-yellow-400 font-semibold">
+                🚀 Get Started
+              </div>
+              <ul className="space-y-1 text-sm">
+                <li className="text-gray-300">
+                  • Type <code className="text-teal-400">help</code> to see all
+                  available commands
+                </li>
+                <li className="text-gray-300">
+                  • Type <code className="text-teal-400">about</code> to learn
+                  more about me
+                </li>
+                <li className="text-gray-300">
+                  • Type <code className="text-teal-400">skills</code> to see my
+                  technical expertise
+                </li>
+                <li className="text-gray-300">
+                  • Type <code className="text-teal-400">projects</code> to
+                  explore my work
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <div className="text-green-400 font-semibold">
+                🛠️ Try DevOps Commands
+              </div>
+              <ul className="space-y-1 text-sm">
+                <li className="text-gray-300">
+                  • <code className="text-teal-400">docker ps</code> - View
+                  running containers
+                </li>
+                <li className="text-gray-300">
+                  • <code className="text-teal-400">kubectl get pods</code> -
+                  List Kubernetes resources
+                </li>
+                <li className="text-gray-400">
+                  • <code className="text-teal-400">terraform plan</code> -
+                  Infrastructure planning
+                </li>
+                <li className="text-gray-300">
+                  • <code className="text-teal-400">aws s3 ls</code> - Cloud
+                  resource management
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-4 p-4 bg-gray-800/30 rounded-lg border border-gray-700">
+            <div className="text-purple-400 font-semibold mb-2">
+              💡 Pro Tips:
+            </div>
+            <div className="space-y-1 text-sm text-gray-300">
+              <div>
+                • Use <kbd className="px-1 bg-gray-700 rounded">Tab</kbd> for
+                command autocompletion
+              </div>
+              <div>
+                • Use <kbd className="px-1 bg-gray-700 rounded">↑↓</kbd> arrow
+                keys to navigate history
+              </div>
+              <div>
+                • All commands simulate real DevOps scenarios and outputs
+              </div>
+              <div>
+                • This portfolio demonstrates practical DevOps knowledge and
+                tools
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
