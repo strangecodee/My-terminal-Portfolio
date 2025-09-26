@@ -8,7 +8,7 @@ export const AwsS3LsCommand: React.FC = () => {
       {awsData.s3Buckets.map((bucket, index) => (
         <div
           key={index}
-          className="font-mono text-sm flex justify-between items-center text-gray-300 hover:bg-gray-800/30 p-2 rounded"
+          className="font-mono text-sm flex justify-between items-center text-gray-300 hover:bg-gray-800/30 p-2 rounded-sm"
         >
           <div className="flex items-center space-x-4">
             <span className="text-blue-400">📦</span>
@@ -45,7 +45,7 @@ export const AwsEc2DescribeInstancesCommand: React.FC = () => {
               {instance.instanceId}
             </span>
             <span
-              className={`px-2 py-1 rounded text-xs font-semibold ${
+              className={`px-2 py-1 rounded-sm text-xs font-semibold ${
                 instance.state === "running"
                   ? "bg-green-500/20 text-green-400"
                   : "bg-red-500/20 text-red-400"
@@ -226,7 +226,7 @@ export const AwsCloudFormationListStacksCommand: React.FC = () => {
               {stack.stackName}
             </span>
             <span
-              className={`px-2 py-1 rounded text-xs font-semibold ${
+              className={`px-2 py-1 rounded-sm text-xs font-semibold ${
                 stack.stackStatus.includes("COMPLETE")
                   ? "bg-green-500/20 text-green-400"
                   : stack.stackStatus.includes("PROGRESS")

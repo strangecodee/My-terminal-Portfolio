@@ -93,7 +93,7 @@ export const DockerLogsCommand: React.FC<{ container?: string }> = ({
       {logs.map((log, index) => (
         <div
           key={index}
-          className="font-mono text-sm text-gray-300 hover:bg-gray-800/30 p-1 rounded"
+          className="font-mono text-sm text-gray-300 hover:bg-gray-800/30 p-1 rounded-sm"
         >
           {log}
         </div>

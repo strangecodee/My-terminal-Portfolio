@@ -149,7 +149,7 @@ export const TerraformStateListCommand: React.FC = () => {
       {terraformData.stateList.map((resource, index) => (
         <div
           key={index}
-          className="font-mono text-sm flex items-center space-x-3 text-gray-300 hover:bg-gray-800/30 p-2 rounded"
+          className="font-mono text-sm flex items-center space-x-3 text-gray-300 hover:bg-gray-800/30 p-2 rounded-sm"
         >
           <span className="text-blue-400">📦</span>
           <span className="text-cyan-400">{resource}</span>

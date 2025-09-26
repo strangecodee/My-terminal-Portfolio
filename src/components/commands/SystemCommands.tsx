@@ -90,7 +90,7 @@ export const PsAuxCommand: React.FC = () => {
       {systemData.processes.map((process, index) => (
         <div
           key={index}
-          className="font-mono text-xs grid grid-cols-10 gap-2 text-gray-300 hover:bg-gray-800/30 p-1 rounded"
+          className="font-mono text-xs grid grid-cols-10 gap-2 text-gray-300 hover:bg-gray-800/30 p-1 rounded-sm"
         >
           <span className="text-yellow-400">{process.user}</span>
           <span className="text-blue-400">{process.pid}</span>
@@ -145,7 +145,7 @@ export const DfCommand: React.FC = () => {
       {systemData.diskUsage.map((disk, index) => (
         <div
           key={index}
-          className="font-mono text-sm grid grid-cols-6 gap-4 text-gray-300 hover:bg-gray-800/30 p-2 rounded"
+          className="font-mono text-sm grid grid-cols-6 gap-4 text-gray-300 hover:bg-gray-800/30 p-2 rounded-sm"
         >
           <span className="text-blue-400">{disk.filesystem}</span>
           <span className="text-cyan-400">{disk.size}</span>
@@ -226,7 +226,7 @@ export const NetstatCommand: React.FC = () => {
       {networkData.connections.map((conn, index) => (
         <div
           key={index}
-          className="font-mono text-xs grid grid-cols-7 gap-2 text-gray-300 hover:bg-gray-800/30 p-1 rounded"
+          className="font-mono text-xs grid grid-cols-7 gap-2 text-gray-300 hover:bg-gray-800/30 p-1 rounded-sm"
         >
           <span className="text-blue-400">{conn.proto}</span>
           <span>{conn.recvQ}</span>

@@ -4,7 +4,7 @@ import { certifications } from "../../data/mockData";
 export const CertificationsCommand: React.FC = () => {
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h2 className="text-xl font-bold text-teal-400 mb-4">
           🏆 Professional Certifications
         </h2>
@@ -36,7 +36,7 @@ export const CertificationsCommand: React.FC = () => {
                   </div>
 
                   {cert.name.includes("AWS") && (
-                    <div className="mt-3 p-3 bg-gray-800 rounded">
+                    <div className="mt-3 p-3 bg-gray-800 rounded-sm">
                       <h4 className="text-teal-400 font-semibold mb-2">
                         Key Competencies:
                       </h4>
@@ -60,7 +60,7 @@ export const CertificationsCommand: React.FC = () => {
                   )}
 
                   {cert.name.includes("Google Cloud") && (
-                    <div className="mt-3 p-3 bg-gray-800 rounded">
+                    <div className="mt-3 p-3 bg-gray-800 rounded-sm">
                       <h4 className="text-teal-400 font-semibold mb-2">
                         Key Competencies:
                       </h4>
@@ -82,7 +82,7 @@ export const CertificationsCommand: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           📈 Certification Journey
         </h3>
@@ -111,12 +111,12 @@ export const CertificationsCommand: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           🎯 Certification Impact
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gray-800 p-3 rounded">
+          <div className="bg-gray-800 p-3 rounded-sm">
             <h4 className="text-orange-400 font-semibold mb-2">
               AWS Expertise
             </h4>
@@ -126,7 +126,7 @@ export const CertificationsCommand: React.FC = () => {
               best practices and cost optimization.
             </p>
           </div>
-          <div className="bg-gray-800 p-3 rounded">
+          <div className="bg-gray-800 p-3 rounded-sm">
             <h4 className="text-blue-400 font-semibold mb-2">
               GCP Proficiency
             </h4>

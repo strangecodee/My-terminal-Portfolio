@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ContactFormData } from "../../types/terminal";
+import type { ContactFormData } from "../../types/terminal";
 
 export const ContactCommand: React.FC = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -76,7 +76,7 @@ export const ContactCommand: React.FC = () => {
   if (isSubmitted) {
     return (
       <div className="space-y-4 text-green-400">
-        <div className="border border-green-400 p-4 rounded">
+        <div className="border border-green-400 p-4 rounded-sm">
           <h2 className="text-xl font-bold text-teal-400 mb-4">
             ✅ Message Sent Successfully!
           </h2>
@@ -99,7 +99,7 @@ export const ContactCommand: React.FC = () => {
 
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h2 className="text-xl font-bold text-teal-400 mb-4">
           📧 Contact Anurag Maurya
         </h2>
@@ -111,7 +111,7 @@ export const ContactCommand: React.FC = () => {
               type="text"
               value={formData.name}
               onChange={(e) => handleInputChange("name", e.target.value)}
-              className="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-green-400 focus:border-teal-400 focus:outline-none"
+              className="w-full bg-gray-800 border border-gray-600 rounded-sm px-3 py-2 text-green-400 focus:border-teal-400 focus:outline-hidden"
               placeholder="Your full name"
               disabled={isSubmitting}
             />
@@ -126,7 +126,7 @@ export const ContactCommand: React.FC = () => {
               type="email"
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
-              className="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-green-400 focus:border-teal-400 focus:outline-none"
+              className="w-full bg-gray-800 border border-gray-600 rounded-sm px-3 py-2 text-green-400 focus:border-teal-400 focus:outline-hidden"
               placeholder="your.email@example.com"
               disabled={isSubmitting}
             />
@@ -140,7 +140,7 @@ export const ContactCommand: React.FC = () => {
             <select
               value={formData.subject}
               onChange={(e) => handleInputChange("subject", e.target.value)}
-              className="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-green-400 focus:border-teal-400 focus:outline-none"
+              className="w-full bg-gray-800 border border-gray-600 rounded-sm px-3 py-2 text-green-400 focus:border-teal-400 focus:outline-hidden"
               disabled={isSubmitting}
             >
               <option value="">Select a subject</option>
@@ -168,7 +168,7 @@ export const ContactCommand: React.FC = () => {
               value={formData.message}
               onChange={(e) => handleInputChange("message", e.target.value)}
               rows={5}
-              className="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-green-400 focus:border-teal-400 focus:outline-none resize-none"
+              className="w-full bg-gray-800 border border-gray-600 rounded-sm px-3 py-2 text-green-400 focus:border-teal-400 focus:outline-hidden resize-none"
               placeholder="Tell me about the opportunity, project requirements, or just say hello!"
               disabled={isSubmitting}
             />
@@ -181,7 +181,7 @@ export const ContactCommand: React.FC = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-teal-600 hover:bg-teal-700 disabled:bg-gray-600 text-white px-6 py-2 rounded font-semibold transition-colors"
+              className="bg-teal-600 hover:bg-teal-700 disabled:bg-gray-600 text-white px-6 py-2 rounded-sm font-semibold transition-colors"
             >
               {isSubmitting ? "Sending..." : "Send Message"}
             </button>
@@ -193,7 +193,7 @@ export const ContactCommand: React.FC = () => {
                 setErrors({});
               }}
               disabled={isSubmitting}
-              className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 text-white px-6 py-2 rounded font-semibold transition-colors"
+              className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 text-white px-6 py-2 rounded-sm font-semibold transition-colors"
             >
               Clear
             </button>
@@ -210,7 +210,7 @@ export const ContactCommand: React.FC = () => {
         )}
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           📞 Direct Contact Information
         </h3>
@@ -264,11 +264,11 @@ export const ContactCommand: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           💼 Open to Opportunities
         </h3>
-        <div className="bg-gray-800 p-3 rounded">
+        <div className="bg-gray-800 p-3 rounded-sm">
           <p className="text-gray-300 text-sm leading-relaxed">
             I'm actively seeking{" "}
             <strong className="text-teal-400">DevOps Engineer</strong> and{" "}
@@ -279,16 +279,16 @@ export const ContactCommand: React.FC = () => {
           </p>
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
-          <span className="bg-orange-600 text-white px-2 py-1 rounded text-xs">
+          <span className="bg-orange-600 text-white px-2 py-1 rounded-sm text-xs">
             AWS Certified
           </span>
-          <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs">
+          <span className="bg-blue-600 text-white px-2 py-1 rounded-sm text-xs">
             GCP Certified
           </span>
-          <span className="bg-green-600 text-white px-2 py-1 rounded text-xs">
+          <span className="bg-green-600 text-white px-2 py-1 rounded-sm text-xs">
             Available Immediately
           </span>
-          <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs">
+          <span className="bg-purple-600 text-white px-2 py-1 rounded-sm text-xs">
             Remote/Hybrid Ready
           </span>
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { GitHubStats } from "../../types/terminal";
+import type { GitHubStats } from "../../types/terminal";
 
 interface GitHubStatsCommandProps {
   stats: GitHubStats;
@@ -20,7 +20,7 @@ export const GitHubStatsCommand: React.FC<GitHubStatsCommandProps> = ({
 
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h2 className="text-xl font-bold text-teal-400 mb-4">
           📊 GitHub Statistics
         </h2>
@@ -78,7 +78,7 @@ export const GitHubStatsCommand: React.FC<GitHubStatsCommandProps> = ({
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-4">
           💻 Language Distribution
         </h3>
@@ -99,7 +99,7 @@ export const GitHubStatsCommand: React.FC<GitHubStatsCommandProps> = ({
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-4">
           ⭐ Top Repositories
         </h3>
@@ -117,7 +117,7 @@ export const GitHubStatsCommand: React.FC<GitHubStatsCommandProps> = ({
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-4">
           🚀 Recent Activity
         </h3>
@@ -138,7 +138,7 @@ export const GitHubStatsCommand: React.FC<GitHubStatsCommandProps> = ({
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           📊 Repository Analytics
         </h3>

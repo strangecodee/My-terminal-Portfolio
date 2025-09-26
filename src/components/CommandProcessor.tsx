@@ -38,6 +38,7 @@ import {
   NetstatCommand,
   TailLogsCommand,
 } from "./commands/SystemCommands";
+import { SystemMonitorCommand } from "./commands/SystemMonitorCommand";
 import {
   PingCommand,
   CurlCommand,
@@ -121,6 +122,29 @@ export class CommandProcessor {
         case "netstat":
           output = <NetstatCommand />;
           break;
+        case "uptime":
+          output = (
+            <div className="space-y-2">
+              <div className="text-teal-400 font-semibold">
+                ⏱️ System Uptime
+              </div>
+              <div className="font-mono text-sm text-gray-300">
+                <div>
+                  {" "}
+                  14:32:45 up 3 days, 2:15, 1 user, load average: 0.45, 0.62,
+                  0.58
+                </div>
+              </div>
+              <div className="text-gray-500 text-sm">
+                💡 System has been running for 3 days, 2 hours, and 15 minutes
+              </div>
+            </div>
+          );
+          break;
+        case "system":
+        case "monitor":
+          output = <SystemMonitorCommand />;
+          break;
 
         // Network Commands
         case "ping":
@@ -162,7 +186,7 @@ export class CommandProcessor {
           );
           break;
         case "whoami":
-          output = <div className="text-green-400">anurag</div>;
+          output = <div className="text-green-400">Anurag</div>;
           break;
         case "date":
           output = (
@@ -268,195 +292,243 @@ export class CommandProcessor {
   private handleDockerCommand(args: string[]): React.ReactNode {
     const subCommand = args[0];
 
-    switch (subCommand) {
-      case "ps": {
-        return <DockerPsCommand />;
-      }
-      case "images": {
-        return <DockerImagesCommand />;
-      }
-      case "logs": {
-        return <DockerLogsCommand container={args[1]} />;
-      }
-      case "build": {
-        const imageTag = args.find((arg) => arg.startsWith("-t"))
-          ? args[args.indexOf("-t") + 1]
-          : "my-app:latest";
-        return <DockerBuildCommand image={imageTag} />;
-      }
-      case "exec":
-        return (
-          <div className="space-y-2">
-            <div className="text-teal-400 font-semibold">🔧 Docker Exec</div>
-            <div className="text-yellow-400">
-              Entering container: {args[2] || "web-server"}
-            </div>
-            <div className="text-gray-400">
-              root@{(args[2] || "web-server").substring(0, 12)}:/app#{" "}
-            </div>
-            <div className="text-gray-500 text-sm">
-              💡 Interactive shell session started
-            </div>
-          </div>
-        );
-      case "run":
-        return (
-          <div className="space-y-2">
-            <div className="text-teal-400 font-semibold">🚀 Docker Run</div>
-            <div className="text-green-400">
-              Container started: {Math.random().toString(36).substring(2, 15)}
-            </div>
-            <div className="text-gray-500 text-sm">
-              💡 Use <code className="text-teal-400">docker ps</code> to see
-              running containers
-            </div>
-          </div>
-        );
-      case "version":
-        return (
-          <div className="space-y-1 text-sm">
-            <div className="text-blue-400">
-              Docker version 24.0.5, build ced0996
-            </div>
-            <div className="text-gray-300">API version: 1.43</div>
-            <div className="text-gray-300">Go version: go1.20.6</div>
-            <div className="text-gray-300">Built: Fri Jul 21 20:35:18 2023</div>
-          </div>
-        );
-      default:
-        return (
-          <div className="text-red-400">
-            Unknown docker command: {subCommand}
-            <div className="text-gray-400 text-sm mt-1">
-              Available: ps, images, logs, build, exec, run, version
-            </div>
-          </div>
-        );
-    }
+    return (
+      <div className="space-y-3">
+        <pre className="text-blue-400 text-xs leading-tight">
+          {asciiArt.docker}
+        </pre>
+        <div>
+          {(() => {
+            switch (subCommand) {
+              case "ps": {
+                return <DockerPsCommand />;
+              }
+              case "images": {
+                return <DockerImagesCommand />;
+              }
+              case "logs": {
+                return <DockerLogsCommand container={args[1]} />;
+              }
+              case "build": {
+                const imageTag = args.find((arg) => arg.startsWith("-t"))
+                  ? args[args.indexOf("-t") + 1]
+                  : "my-app:latest";
+                return <DockerBuildCommand image={imageTag} />;
+              }
+              case "exec":
+                return (
+                  <div className="space-y-2">
+                    <div className="text-teal-400 font-semibold">
+                      🔧 Docker Exec
+                    </div>
+                    <div className="text-yellow-400">
+                      Entering container: {args[2] || "web-server"}
+                    </div>
+                    <div className="text-gray-400">
+                      root@{(args[2] || "web-server").substring(0, 12)}:/app#{" "}
+                    </div>
+                    <div className="text-gray-500 text-sm">
+                      💡 Interactive shell session started
+                    </div>
+                  </div>
+                );
+              case "run":
+                return (
+                  <div className="space-y-2">
+                    <div className="text-teal-400 font-semibold">
+                      🚀 Docker Run
+                    </div>
+                    <div className="text-green-400">
+                      Container started:{" "}
+                      {Math.random().toString(36).substring(2, 15)}
+                    </div>
+                    <div className="text-gray-500 text-sm">
+                      💡 Use <code className="text-teal-400">docker ps</code> to
+                      see running containers
+                    </div>
+                  </div>
+                );
+              case "version":
+                return (
+                  <div className="space-y-1 text-sm">
+                    <div className="text-blue-400">
+                      Docker version 24.0.5, build ced0996
+                    </div>
+                    <div className="text-gray-300">API version: 1.43</div>
+                    <div className="text-gray-300">Go version: go1.20.6</div>
+                    <div className="text-gray-300">
+                      Built: Fri Jul 21 20:35:18 2023
+                    </div>
+                  </div>
+                );
+              default:
+                return (
+                  <div className="text-red-400">
+                    Unknown docker command: {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: ps, images, logs, build, exec, run, version
+                    </div>
+                  </div>
+                );
+            }
+          })()}
+        </div>
+      </div>
+    );
   }
 
   private handleKubectlCommand(args: string[]): React.ReactNode {
     const subCommand = args[0];
 
-    switch (subCommand) {
-      case "get":
-        const resource = args[1];
-        switch (resource) {
-          case "pods":
-            return <KubectlGetPodsCommand />;
-          case "services":
-          case "svc":
-            return <KubectlGetServicesCommand />;
-          case "deployments":
-          case "deploy":
-            return <KubectlGetDeploymentsCommand />;
-          default:
-            return (
-              <div className="text-red-400">Unknown resource: {resource}</div>
-            );
-        }
-      case "describe":
-        const describeResource = args[1];
-        const resourceName = args[2];
-        if (describeResource === "pod") {
-          return <KubectlDescribePodCommand podName={resourceName} />;
-        }
-        return (
-          <div className="text-yellow-400">
-            Describe {describeResource} {resourceName} - Feature coming soon
-          </div>
-        );
-      case "apply":
-        return <KubectlApplyCommand manifest={args[2]} />;
-      case "logs":
-        const podName = args[1] || "frontend-deployment-7d4b8c9f6-x8k2m";
-        return (
-          <div className="space-y-2">
-            <div className="text-teal-400 font-semibold">
-              📋 Pod Logs: {podName}
-            </div>
-            <div className="bg-gray-900/50 p-3 rounded-lg border border-gray-700">
-              <div className="font-mono text-xs space-y-1 text-gray-300">
-                <div>
-                  2023-09-20 14:30:15 [INFO] Application started on port 80
-                </div>
-                <div>
-                  2023-09-20 14:30:16 [INFO] Health check endpoint ready
-                </div>
-                <div>
-                  2023-09-20 14:30:17 [INFO] Serving static files from
-                  /usr/share/nginx/html
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case "version":
-        return (
-          <div className="space-y-1 text-sm">
-            <div className="text-blue-400">Client Version: v1.28.2</div>
-            <div className="text-green-400">Server Version: v1.27.3</div>
-          </div>
-        );
-      default:
-        return (
-          <div className="text-red-400">
-            Unknown kubectl command: {subCommand}
-            <div className="text-gray-400 text-sm mt-1">
-              Available: get, describe, apply, logs, version
-            </div>
-          </div>
-        );
-    }
+    return (
+      <div className="space-y-3">
+        <pre className="text-blue-400 text-xs leading-tight">
+          {asciiArt.kubernetes}
+        </pre>
+        <div>
+          {(() => {
+            switch (subCommand) {
+              case "get":
+                const resource = args[1];
+                switch (resource) {
+                  case "pods":
+                    return <KubectlGetPodsCommand />;
+                  case "services":
+                  case "svc":
+                    return <KubectlGetServicesCommand />;
+                  case "deployments":
+                  case "deploy":
+                    return <KubectlGetDeploymentsCommand />;
+                  default:
+                    return (
+                      <div className="text-red-400">
+                        Unknown resource: {resource}
+                      </div>
+                    );
+                }
+              case "describe":
+                const describeResource = args[1];
+                const resourceName = args[2];
+                if (describeResource === "pod") {
+                  return <KubectlDescribePodCommand podName={resourceName} />;
+                }
+                return (
+                  <div className="text-yellow-400">
+                    Describe {describeResource} {resourceName} - Feature coming
+                    soon
+                  </div>
+                );
+              case "apply":
+                return <KubectlApplyCommand manifest={args[2]} />;
+              case "logs":
+                const podName =
+                  args[1] || "frontend-deployment-7d4b8c9f6-x8k2m";
+                return (
+                  <div className="space-y-2">
+                    <div className="text-teal-400 font-semibold">
+                      📋 Pod Logs: {podName}
+                    </div>
+                    <div className="bg-gray-900/50 p-3 rounded-lg border border-gray-700">
+                      <div className="font-mono text-xs space-y-1 text-gray-300">
+                        <div>
+                          2023-09-20 14:30:15 [INFO] Application started on port
+                          80
+                        </div>
+                        <div>
+                          2023-09-20 14:30:16 [INFO] Health check endpoint ready
+                        </div>
+                        <div>
+                          2023-09-20 14:30:17 [INFO] Serving static files from
+                          /usr/share/nginx/html
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              case "version":
+                return (
+                  <div className="space-y-1 text-sm">
+                    <div className="text-blue-400">Client Version: v1.28.2</div>
+                    <div className="text-green-400">
+                      Server Version: v1.27.3
+                    </div>
+                  </div>
+                );
+              default:
+                return (
+                  <div className="text-red-400">
+                    Unknown kubectl command: {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: get, describe, apply, logs, version
+                    </div>
+                  </div>
+                );
+            }
+          })()}
+        </div>
+      </div>
+    );
   }
 
   private handleAwsCommand(args: string[]): React.ReactNode {
     const service = args[0];
     const subCommand = args[1];
-
-    switch (service) {
-      case "s3":
-        if (subCommand === "ls") {
-          return <AwsS3LsCommand />;
-        }
-        break;
-      case "ec2":
-        if (subCommand === "describe-instances") {
-          return <AwsEc2DescribeInstancesCommand />;
-        }
-        break;
-      case "lambda":
-        if (subCommand === "list-functions") {
-          return <AwsLambdaListFunctionsCommand />;
-        }
-        break;
-      case "iam":
-        if (subCommand === "list-users") {
-          return <AwsIamListUsersCommand />;
-        }
-        break;
-      case "cloudformation":
-        if (subCommand === "list-stacks") {
-          return <AwsCloudFormationListStacksCommand />;
-        }
-        break;
-      case "--version":
-        return (
-          <div className="space-y-1 text-sm">
-            <div className="text-blue-400">aws-cli/2.13.25 Python/3.11.5</div>
-            <div className="text-gray-300">
-              Linux/5.15.0-78-generic exe/x86_64.ubuntu.22
-            </div>
-          </div>
-        );
-    }
-
     return (
-      <div className="text-red-400">
-        Unknown AWS command: {service} {subCommand}
-        <div className="text-gray-400 text-sm mt-1">
-          Available: s3 ls, ec2 describe-instances, lambda list-functions, iam
-          list-users
+      <div className="space-y-3">
+        <pre className="text-orange-400 text-xs leading-tight">
+          {asciiArt.aws}
+        </pre>
+        <div>
+          {(() => {
+            switch (service) {
+              case "s3":
+                if (subCommand === "ls") {
+                  return <AwsS3LsCommand />;
+                }
+                break;
+              case "ec2":
+                if (subCommand === "describe-instances") {
+                  return <AwsEc2DescribeInstancesCommand />;
+                }
+                break;
+              case "lambda":
+                if (subCommand === "list-functions") {
+                  return <AwsLambdaListFunctionsCommand />;
+                }
+                break;
+              case "iam":
+                if (subCommand === "list-users") {
+                  return <AwsIamListUsersCommand />;
+                }
+                break;
+              case "cloudformation":
+                if (subCommand === "list-stacks") {
+                  return <AwsCloudFormationListStacksCommand />;
+                }
+                break;
+              case "--version":
+                return (
+                  <div className="space-y-1 text-sm">
+                    <div className="text-blue-400">
+                      aws-cli/2.13.25 Python/3.11.5
+                    </div>
+                    <div className="text-gray-300">
+                      Linux/5.15.0-78-generic exe/x86_64.ubuntu.22
+                    </div>
+                  </div>
+                );
+            }
+
+            return (
+              <div className="text-red-400">
+                Unknown AWS command: {service} {subCommand}
+                <div className="text-gray-400 text-sm mt-1">
+                  Available: s3 ls, ec2 describe-instances, lambda
+                  list-functions, iam list-users
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </div>
     );
@@ -465,36 +537,55 @@ export class CommandProcessor {
   private handleTerraformCommand(args: string[]): React.ReactNode {
     const subCommand = args[0];
 
-    switch (subCommand) {
-      case "plan":
-        return <TerraformPlanCommand />;
-      case "apply":
-        return <TerraformApplyCommand />;
-      case "destroy":
-        return <TerraformDestroyCommand />;
-      case "state":
-        if (args[1] === "list") {
-          return <TerraformStateListCommand />;
-        }
-        break;
-      case "validate":
-        return <TerraformValidateCommand />;
-      case "show":
-        return <TerraformShowConfigCommand />;
-      case "version":
-        return (
-          <div className="space-y-1 text-sm">
-            <div className="text-blue-400">Terraform v1.5.7</div>
-            <div className="text-gray-300">on linux_amd64</div>
-          </div>
-        );
-    }
-
     return (
-      <div className="text-red-400">
-        Unknown terraform command: {subCommand}
-        <div className="text-gray-400 text-sm mt-1">
-          Available: plan, apply, destroy, state list, validate, show, version
+      <div className="space-y-3">
+        <pre className="text-blue-400 text-xs leading-tight">
+          {asciiArt.terraform}
+        </pre>
+        <div>
+          {(() => {
+            switch (subCommand) {
+              case "plan":
+                return <TerraformPlanCommand />;
+              case "apply":
+                return <TerraformApplyCommand />;
+              case "destroy":
+                return <TerraformDestroyCommand />;
+              case "state":
+                if (args[1] === "list") {
+                  return <TerraformStateListCommand />;
+                }
+                return (
+                  <div className="text-red-400">
+                    Unknown terraform state command: {args[1]}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: list
+                    </div>
+                  </div>
+                );
+              case "validate":
+                return <TerraformValidateCommand />;
+              case "show":
+                return <TerraformShowConfigCommand />;
+              case "version":
+                return (
+                  <div className="space-y-1 text-sm">
+                    <div className="text-blue-400">Terraform v1.5.7</div>
+                    <div className="text-gray-300">on linux_amd64</div>
+                  </div>
+                );
+              default:
+                return (
+                  <div className="text-red-400">
+                    Unknown terraform command: {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: plan, apply, destroy, state list, validate,
+                      show, version
+                    </div>
+                  </div>
+                );
+            }
+          })()}
         </div>
       </div>
     );
@@ -502,24 +593,34 @@ export class CommandProcessor {
 
   private handleJenkinsCommand(args: string[]): React.ReactNode {
     const subCommand = args[0];
-
-    switch (subCommand) {
-      case "build":
-        return <JenkinsBuildCommand job={args[1]} />;
-      case "status":
-        return <JenkinsStatusCommand />;
-      case "logs":
-        return <JenkinsLogsCommand build={args[1]} />;
-      default:
-        return (
-          <div className="text-red-400">
-            Unknown jenkins command: {subCommand}
-            <div className="text-gray-400 text-sm mt-1">
-              Available: build, status, logs
-            </div>
-          </div>
-        );
-    }
+    return (
+      <div className="space-y-3">
+        <pre className="text-purple-400 text-xs leading-tight">
+          {asciiArt.jenkins}
+        </pre>
+        <div>
+          {(() => {
+            switch (subCommand) {
+              case "build":
+                return <JenkinsBuildCommand job={args[1]} />;
+              case "status":
+                return <JenkinsStatusCommand />;
+              case "logs":
+                return <JenkinsLogsCommand build={args[1]} />;
+              default:
+                return (
+                  <div className="text-red-400">
+                    Unknown jenkins command: {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: build, status, logs
+                    </div>
+                  </div>
+                );
+            }
+          })()}
+        </div>
+      </div>
+    );
   }
 
   private handleGrepCommand(args: string[]): React.ReactNode {
@@ -792,15 +893,15 @@ export class CommandProcessor {
           <div className="text-yellow-400 font-semibold mb-2">💡 Pro Tips:</div>
           <div className="space-y-1 text-sm text-gray-300">
             <div>
-              • Use <kbd className="px-1 bg-gray-700 rounded">↑↓</kbd> arrow
+              • Use <kbd className="px-1 bg-gray-700 rounded-sm">↑↓</kbd> arrow
               keys to navigate command history
             </div>
             <div>
-              • Press <kbd className="px-1 bg-gray-700 rounded">Tab</kbd> for
+              • Press <kbd className="px-1 bg-gray-700 rounded-sm">Tab</kbd> for
               command autocompletion
             </div>
             <div>
-              • Type <kbd className="px-1 bg-gray-700 rounded">clear</kbd> to
+              • Type <kbd className="px-1 bg-gray-700 rounded-sm">clear</kbd> to
               clear the terminal
             </div>
             <div>
@@ -929,7 +1030,7 @@ export class CommandProcessor {
               {job.technologies.map((tech, techIndex) => (
                 <span
                   key={techIndex}
-                  className="px-2 py-1 bg-gray-700 text-cyan-400 rounded text-xs"
+                  className="px-2 py-1 bg-gray-700 text-cyan-400 rounded-sm text-xs"
                 >
                   {tech}
                 </span>
@@ -961,7 +1062,7 @@ export class CommandProcessor {
               {project.technologies.map((tech, techIndex) => (
                 <span
                   key={techIndex}
-                  className="px-2 py-1 bg-gray-700 text-cyan-400 rounded text-xs"
+                  className="px-2 py-1 bg-gray-700 text-cyan-400 rounded-sm text-xs"
                 >
                   {tech}
                 </span>
@@ -1040,7 +1141,7 @@ export class CommandProcessor {
               {project.technologies.map((tech, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-gray-700 text-cyan-400 rounded text-xs"
+                  className="px-2 py-1 bg-gray-700 text-cyan-400 rounded-sm text-xs"
                 >
                   {tech}
                 </span>
@@ -1305,12 +1406,12 @@ export class CommandProcessor {
             </div>
             <div className="space-y-1 text-sm text-gray-300">
               <div>
-                • Use <kbd className="px-1 bg-gray-700 rounded">Tab</kbd> for
+                • Use <kbd className="px-1 bg-gray-700 rounded-sm">Tab</kbd> for
                 command autocompletion
               </div>
               <div>
-                • Use <kbd className="px-1 bg-gray-700 rounded">↑↓</kbd> arrow
-                keys to navigate history
+                • Use <kbd className="px-1 bg-gray-700 rounded-sm">↑↓</kbd>{" "}
+                arrow keys to navigate history
               </div>
               <div>
                 • All commands simulate real DevOps scenarios and outputs

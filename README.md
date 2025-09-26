@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+
 ## technology stack
 
 This project is built with:
@@ -15,7 +16,7 @@ All shadcn/ui components have been downloaded under `@/components/ui`.
 
 - `index.html` - HTML entry point
 - `vite.config.ts` - Vite configuration file
-- `tailwind.config.js` - Tailwind CSS configuration file
+- `tailwind.config.ts` - Tailwind CSS configuration file
 - `package.json` - NPM dependencies and scripts
 - `src/app.tsx` - Root component of the project
 - `src/main.tsx` - Project entry point
@@ -65,6 +66,9 @@ pnpm run dev
 ```shell
 pnpm run build
 ```
+
 =======
+
 # My-terminal-Portfolio
->>>>>>> ddef01e10f59e3fb8ee34a50540491c621e19ba0
+
+> > > > > > > ddef01e10f59e3fb8ee34a50540491c621e19ba0

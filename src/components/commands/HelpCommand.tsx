@@ -103,7 +103,7 @@ export const HelpCommand: React.FC = () => {
 
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h2 className="text-xl font-bold text-teal-400 mb-4">
           📖 Available Commands - Anurag's DevOps Portfolio
         </h2>
@@ -122,7 +122,7 @@ export const HelpCommand: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-4">
           ⚙️ DevOps Commands & Tools
         </h3>
@@ -139,7 +139,7 @@ export const HelpCommand: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-4">
           🎮 Fun Commands & Easter Eggs
         </h3>
@@ -156,7 +156,7 @@ export const HelpCommand: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           ⌨️ Keyboard Shortcuts
         </h3>
@@ -182,7 +182,7 @@ export const HelpCommand: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           💡 Quick Start Guide
         </h3>

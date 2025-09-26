@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 export const DownloadCommand: React.FC = () => {
   const [progress, setProgress] = useState(0);
@@ -49,7 +49,7 @@ export const DownloadCommand: React.FC = () => {
   if (isCompleted) {
     return (
       <div className="space-y-4 text-green-400">
-        <div className="border border-green-400 p-4 rounded">
+        <div className="border border-green-400 p-4 rounded-sm">
           <h2 className="text-xl font-bold text-teal-400 mb-4">
             ✅ Download Complete!
           </h2>
@@ -60,7 +60,7 @@ export const DownloadCommand: React.FC = () => {
               successfully!
             </div>
 
-            <div className="bg-gray-800 p-3 rounded font-mono text-sm">
+            <div className="bg-gray-800 p-3 rounded-sm font-mono text-sm">
               <div className="text-green-400">
                 [████████████████████████████████████████████████] 100%
               </div>
@@ -97,13 +97,13 @@ export const DownloadCommand: React.FC = () => {
   if (isDownloading) {
     return (
       <div className="space-y-4 text-green-400">
-        <div className="border border-green-400 p-4 rounded">
+        <div className="border border-green-400 p-4 rounded-sm">
           <h2 className="text-xl font-bold text-teal-400 mb-4">
             📥 Downloading Resume...
           </h2>
 
           <div className="space-y-3">
-            <div className="bg-gray-800 p-3 rounded font-mono text-sm">
+            <div className="bg-gray-800 p-3 rounded-sm font-mono text-sm">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-gray-300">Alex_Developer_Resume.pdf</span>
                 <span className="text-teal-400">{Math.round(progress)}%</span>
@@ -134,7 +134,7 @@ export const DownloadCommand: React.FC = () => {
 
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h2 className="text-xl font-bold text-teal-400 mb-4">
           📄 Resume Download
         </h2>
@@ -146,7 +146,7 @@ export const DownloadCommand: React.FC = () => {
             contact information.
           </div>
 
-          <div className="bg-gray-800 p-4 rounded">
+          <div className="bg-gray-800 p-4 rounded-sm">
             <h3 className="text-teal-400 font-semibold mb-2">
               📋 What's Included:
             </h3>
@@ -160,7 +160,7 @@ export const DownloadCommand: React.FC = () => {
             </ul>
           </div>
 
-          <div className="bg-gray-800 p-4 rounded">
+          <div className="bg-gray-800 p-4 rounded-sm">
             <h3 className="text-teal-400 font-semibold mb-2">
               📊 File Details:
             </h3>
@@ -182,7 +182,7 @@ export const DownloadCommand: React.FC = () => {
 
           <button
             onClick={startDownload}
-            className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded font-semibold transition-colors flex items-center gap-2"
+            className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-sm font-semibold transition-colors flex items-center gap-2"
           >
             <span>📥</span>
             Download Resume (PDF)
@@ -190,7 +190,7 @@ export const DownloadCommand: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           🤝 Let's Connect
         </h3>

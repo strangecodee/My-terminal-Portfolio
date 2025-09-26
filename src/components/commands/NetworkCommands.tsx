@@ -5,6 +5,7 @@ export const PingCommand: React.FC<{ host?: string }> = ({
 }) => {
   const [pings, setPings] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(true);
+  const [, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const pingResults = [
@@ -16,24 +17,28 @@ export const PingCommand: React.FC<{ host?: string }> = ({
       `64 bytes from 172.217.12.142: icmp_seq=5 ttl=57 time=11.9 ms`,
     ];
 
-    let index = 0;
+    const statistics = [
+      `--- ${host} ping statistics ---`,
+      `5 packets transmitted, 5 received, 0% packet loss`,
+      `round-trip min/avg/max/stddev = 11.8/12.3/13.2/0.5 ms`,
+    ];
+
     const interval = setInterval(() => {
-      if (index < pingResults.length) {
-        setPings((prev) => [...prev, pingResults[index]]);
-        index++;
-      } else {
-        setPings((prev) => [...prev, `--- ${host} ping statistics ---`]);
-        setPings((prev) => [
-          ...prev,
-          `5 packets transmitted, 5 received, 0% packet loss`,
-        ]);
-        setPings((prev) => [
-          ...prev,
-          `round-trip min/avg/max/stddev = 11.8/12.3/13.2/0.5 ms`,
-        ]);
-        setIsRunning(false);
-        clearInterval(interval);
-      }
+      setCurrentIndex((prevIndex) => {
+        if (prevIndex < pingResults.length) {
+          setPings((prev) => [...prev, pingResults[prevIndex]]);
+          return prevIndex + 1;
+        } else if (prevIndex < pingResults.length + statistics.length) {
+          const statIndex = prevIndex - pingResults.length;
+          setPings((prev) => [...prev, statistics[statIndex]]);
+          if (statIndex === statistics.length - 1) {
+            setIsRunning(false);
+            clearInterval(interval);
+          }
+          return prevIndex + 1;
+        }
+        return prevIndex;
+      });
     }, 1000);
 
     return () => clearInterval(interval);
@@ -362,7 +367,7 @@ export const TracerouteCommand: React.FC<{ host?: string }> = ({
           {hops.map((hop, index) => (
             <div
               key={index}
-              className="font-mono text-xs text-gray-300 hover:bg-gray-700/30 p-1 rounded"
+              className="font-mono text-xs text-gray-300 hover:bg-gray-700/30 p-1 rounded-sm"
             >
               <span className="text-yellow-400 w-2 inline-block">
                 {hop.hop}

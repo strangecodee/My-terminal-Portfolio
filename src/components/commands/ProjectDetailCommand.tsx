@@ -1,5 +1,5 @@
 import React from "react";
-import { Project } from "../../types/terminal";
+import type { Project } from "../../types/terminal";
 
 interface ProjectDetailCommandProps {
   project: Project;
@@ -36,7 +36,7 @@ export const ProjectDetailCommand: React.FC<ProjectDetailCommandProps> = ({
 
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <div className="flex items-center gap-3 mb-4">
           <h2 className="text-xl font-bold text-teal-400">{project.name}</h2>
           <span className={`${getStatusColor(project.status)} font-semibold`}>

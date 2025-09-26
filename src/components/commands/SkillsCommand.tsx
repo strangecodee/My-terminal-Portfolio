@@ -1,89 +1,39 @@
 import React from "react";
-import { systemInfo } from "../../data/mockData";
+import { portfolioData } from "../../data/mockData";
 
 export const SkillsCommand: React.FC = () => {
+  // Transform portfolioData.skills into the format expected by the component
   const skillCategories = {
-    "Cloud Platforms": [
-      {
-        name: "Amazon Web Services (AWS)",
-        level: 85,
-        description: "EC2, S3, IAM, VPC, CloudWatch, Lambda",
-      },
-      {
-        name: "Google Cloud Platform (GCP)",
-        level: 75,
-        description: "Compute Engine, Cloud Storage, IAM, Networking",
-      },
-    ],
-    "DevOps Tools": [
-      {
-        name: "Docker & Containerization",
-        level: 80,
-        description:
-          "Container orchestration, Docker Compose, multi-stage builds",
-      },
-      {
-        name: "Jenkins CI/CD",
-        level: 75,
-        description: "Pipeline automation, build & deployment workflows",
-      },
-      {
-        name: "Terraform",
-        level: 70,
-        description: "Infrastructure as Code, AWS resource provisioning",
-      },
-    ],
-    "Programming & Scripting": [
-      {
-        name: "Python",
-        level: 75,
-        description: "Automation scripts, AWS SDK, data processing",
-      },
-      {
-        name: "Bash Scripting",
-        level: 80,
-        description: "System administration, deployment automation",
-      },
-      {
-        name: "JavaScript",
-        level: 70,
-        description: "Web development, Node.js, React applications",
-      },
-    ],
-    "System Administration": [
-      {
-        name: "Linux Administration",
-        level: 85,
-        description: "Ubuntu, CentOS, system monitoring, security",
-      },
-      {
-        name: "Networking",
-        level: 70,
-        description: "VPC, subnets, security groups, load balancing",
-      },
-      {
-        name: "Monitoring & Logging",
-        level: 75,
-        description: "CloudWatch, system metrics, log analysis",
-      },
-    ],
-    "Web Technologies": [
-      {
-        name: "HTML/CSS",
-        level: 80,
-        description: "Responsive design, modern CSS frameworks",
-      },
-      {
-        name: "React.js",
-        level: 70,
-        description: "Component development, state management",
-      },
-      {
-        name: "Git & GitHub",
-        level: 85,
-        description: "Version control, collaboration, CI/CD integration",
-      },
-    ],
+    "Cloud Platforms": portfolioData.skills.cloudPlatforms.map((skill) => ({
+      name: skill.name,
+      level: skill.level,
+      description: `${skill.name} - Cloud infrastructure and services`,
+    })),
+    Containerization: portfolioData.skills.containerization.map((skill) => ({
+      name: skill.name,
+      level: skill.level,
+      description: `${skill.name} - Container orchestration and deployment`,
+    })),
+    "CI/CD": portfolioData.skills.cicd.map((skill) => ({
+      name: skill.name,
+      level: skill.level,
+      description: `${skill.name} - Continuous integration and deployment`,
+    })),
+    "Infrastructure as Code": portfolioData.skills.iac.map((skill) => ({
+      name: skill.name,
+      level: skill.level,
+      description: `${skill.name} - Infrastructure automation and provisioning`,
+    })),
+    Monitoring: portfolioData.skills.monitoring.map((skill) => ({
+      name: skill.name,
+      level: skill.level,
+      description: `${skill.name} - System monitoring and observability`,
+    })),
+    Programming: portfolioData.skills.programming.map((skill) => ({
+      name: skill.name,
+      level: skill.level,
+      description: `${skill.name} - Development and scripting`,
+    })),
   };
 
   const getSkillBar = (level: number) => {
@@ -101,7 +51,7 @@ export const SkillsCommand: React.FC = () => {
 
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h2 className="text-xl font-bold text-teal-400 mb-4">
           🛠️ Technical Skills Matrix
         </h2>
@@ -135,48 +85,48 @@ export const SkillsCommand: React.FC = () => {
         ))}
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           📊 Skill Level Legend
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-green-400 rounded"></div>
+            <div className="w-3 h-3 bg-green-400 rounded-sm"></div>
             <span className="text-sm text-gray-300">Expert (80%+)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-yellow-400 rounded"></div>
+            <div className="w-3 h-3 bg-yellow-400 rounded-sm"></div>
             <span className="text-sm text-gray-300">Proficient (70-79%)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-orange-400 rounded"></div>
+            <div className="w-3 h-3 bg-orange-400 rounded-sm"></div>
             <span className="text-sm text-gray-300">Intermediate (60-69%)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-red-400 rounded"></div>
+            <div className="w-3 h-3 bg-red-400 rounded-sm"></div>
             <span className="text-sm text-gray-300">Beginner (50-59%)</span>
           </div>
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           🚀 Currently Learning
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gray-800 p-3 rounded">
+          <div className="bg-gray-800 p-3 rounded-sm">
             <h4 className="text-yellow-400 font-semibold mb-2">Kubernetes</h4>
             <p className="text-gray-300 text-sm">
               Container orchestration, pod management, services, and deployments
             </p>
           </div>
-          <div className="bg-gray-800 p-3 rounded">
+          <div className="bg-gray-800 p-3 rounded-sm">
             <h4 className="text-blue-400 font-semibold mb-2">Ansible</h4>
             <p className="text-gray-300 text-sm">
               Configuration management and infrastructure automation
             </p>
           </div>
-          <div className="bg-gray-800 p-3 rounded">
+          <div className="bg-gray-800 p-3 rounded-sm">
             <h4 className="text-purple-400 font-semibold mb-2">
               Prometheus & Grafana
             </h4>
@@ -184,7 +134,7 @@ export const SkillsCommand: React.FC = () => {
               Advanced monitoring, alerting, and visualization
             </p>
           </div>
-          <div className="bg-gray-800 p-3 rounded">
+          <div className="bg-gray-800 p-3 rounded-sm">
             <h4 className="text-green-400 font-semibold mb-2">GitLab CI/CD</h4>
             <p className="text-gray-300 text-sm">
               Advanced pipeline automation and GitOps practices

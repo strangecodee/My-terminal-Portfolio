@@ -1,14 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTerminal } from "../hooks/useTerminal";
+import type { TerminalState } from "../types/terminal";
 
 interface CommandLineProps {
   onExecuteCommand: (command: string) => void;
   disabled?: boolean;
+  state: TerminalState;
 }
 
 export const CommandLine: React.FC<CommandLineProps> = ({
   onExecuteCommand,
   disabled = false,
+  state,
 }) => {
   const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -17,8 +20,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
   const [isTyping, setIsTyping] = useState(false);
   const [draftInput, setDraftInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const { state, getPreviousCommand, getNextCommand, getAutoComplete } =
-    useTerminal();
+  const { getPreviousCommand, getNextCommand, getAutoComplete } = useTerminal();
 
   useEffect(() => {
     if (inputRef.current && !disabled) {
@@ -160,17 +162,17 @@ export const CommandLine: React.FC<CommandLineProps> = ({
     <div className="relative">
       {/* Enhanced responsive command input line */}
       <div
-        className={`flex items-center p-3 sm:p-4 rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-[1.01] ${
+        className={`flex items-center p-3 sm:p-4 rounded-lg backdrop-blur-xs transition-all duration-300 hover:scale-[1.01] ${
           state.theme === "dark"
             ? "bg-gray-800/30 border border-gray-700/50 hover:border-gray-600/70 hover:bg-gray-800/50"
-            : "bg-white/50 border border-ubuntu-border/50 hover:border-ubuntu-border shadow-sm hover:shadow-md"
+            : "bg-white/50 border border-ubuntu-border/50 hover:border-ubuntu-border shadow-xs hover:shadow-md"
         } ${disabled ? "opacity-60 animate-pulse" : "hover:shadow-lg"} ${
           isTyping ? "animate-typing-glow" : ""
         }`}
       >
         {/* Responsive terminal prompt */}
         <div
-          className={`mr-2 sm:mr-3 font-mono font-medium flex-shrink-0 transition-all duration-300 text-xs sm:text-sm ${
+          className={`mr-2 sm:mr-3 font-mono font-medium shrink-0 transition-all duration-300 text-xs sm:text-sm ${
             state.theme === "dark" ? "text-green-400" : "text-ubuntu-dark"
           }`}
         >
@@ -214,13 +216,16 @@ export const CommandLine: React.FC<CommandLineProps> = ({
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           disabled={disabled}
-          className={`flex-1 bg-transparent border-none outline-none font-mono text-sm sm:text-base placeholder-opacity-50 transition-all duration-300 min-w-0 ${
-            state.theme === "dark"
-              ? "text-green-400 caret-green-400 placeholder-gray-500"
-              : "text-ubuntu-dark caret-ubuntu-accent placeholder-ubuntu-muted"
-          } ${disabled ? "cursor-not-allowed" : ""} ${
-            isTyping ? "animate-text-glow" : ""
-          }`}
+          className={`px-2 flex-1 bg-transparent border-none outline-hidden font-mono text-sm sm:text-base placeholder-black/50 transition-all duration-300 min-w-0 
+    ${
+      state.theme === "dark"
+        ? "text-green-400 caret-green-400 placeholder-gray-500"
+        : "text-ubuntu-dark caret-ubuntu-accent placeholder-ubuntu-muted"
+    }
+    ${disabled ? "cursor-not-allowed" : ""} 
+    ${isTyping ? "animate-text-glow" : ""}
+    [font-variant-ligatures:none] tracking-widest caret-green-400
+  `}
           placeholder={disabled ? "Processing..." : "Type a command..."}
           autoComplete="off"
           spellCheck={false}
@@ -230,18 +235,18 @@ export const CommandLine: React.FC<CommandLineProps> = ({
         />
 
         {/* Enhanced responsive cursor */}
-        {!disabled && (
+        {/* {!disabled && (
           <span
-            className={`ml-1 font-mono text-sm sm:text-base animate-cursor-blink flex-shrink-0 ${
+            className={`ml-1 font-mono text-sm sm:text-base animate-cursor-blink shrink-0 ${
               state.theme === "dark" ? "text-green-400" : "text-ubuntu-accent"
             }`}
           >
             █
           </span>
-        )}
+        )} */}
 
         {/* Responsive status indicators */}
-        <div className="ml-2 sm:ml-3 flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+        <div className="ml-2 sm:ml-3 flex items-center space-x-1 sm:space-x-2 shrink-0">
           {input.length > 0 && (
             <span
               className={`text-xs px-1.5 sm:px-2 py-1 rounded-full transition-all duration-300 animate-scale-in ${
@@ -325,7 +330,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
                 } ${
                   index === suggestions.length - 1
                     ? ""
-                    : "border-b border-opacity-20"
+                    : "border-b border-black/20"
                 } ${
                   state.theme === "dark"
                     ? "border-gray-700"
@@ -343,7 +348,7 @@ export const CommandLine: React.FC<CommandLineProps> = ({
                   {suggestion}
                 </span>
                 <span
-                  className={`text-xs opacity-60 group-hover:opacity-100 transition-all duration-200 ml-2 flex-shrink-0 ${
+                  className={`text-xs opacity-60 group-hover:opacity-100 transition-all duration-200 ml-2 shrink-0 ${
                     index === selectedSuggestion
                       ? "opacity-100 animate-bounce"
                       : ""

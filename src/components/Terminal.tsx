@@ -14,6 +14,7 @@ export const Terminal: React.FC = () => {
     setProcessing,
     setTheme,
   } = useTerminal();
+
   const [commandProcessor] = useState(() => new CommandProcessor());
   const terminalRef = useRef<HTMLDivElement>(null);
   const [showWelcome, setShowWelcome] = useState(true);
@@ -174,7 +175,7 @@ export const Terminal: React.FC = () => {
                 className="text-teal-400 animate-fade-in-up flex items-center gap-2 justify-center sm:justify-start"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <span className="animate-pulse flex-shrink-0">▶</span>
+                <span className="animate-pulse shrink-0">▶</span>
                 <span className="typewriter text-center sm:text-left break-words">
                   {message}
                 </span>
@@ -200,7 +201,7 @@ export const Terminal: React.FC = () => {
     >
       {/* Full screen terminal header */}
       <div
-        className={`border-b-2 shadow-lg backdrop-blur-sm transition-all duration-500 ${
+        className={`border-b-2 shadow-lg backdrop-blur-xs transition-all duration-500 ${
           state.theme === "dark"
             ? "border-gray-600 bg-gradient-to-r from-gray-800 to-gray-700 shadow-gray-900/50"
             : "border-ubuntu-border bg-gradient-to-r from-white to-gray-50 shadow-black/10"
@@ -213,7 +214,7 @@ export const Terminal: React.FC = () => {
               className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 cursor-pointer animate-glow-pulse touch-manipulation ${
                 state.theme === "dark"
                   ? "bg-red-500 hover:bg-red-400 shadow-lg shadow-red-500/50"
-                  : "bg-ubuntu-close hover:bg-red-400 shadow-lg shadow-red-400/50"
+                  : "bg-red-500 hover:bg-red-400 shadow-lg shadow-red-400/50"
               }`}
               title="Close"
             ></div>
@@ -242,7 +243,7 @@ export const Terminal: React.FC = () => {
             className={`text-sm font-mono font-medium px-3 py-2 rounded-full transition-all duration-300 hover:scale-105 flex items-center ${
               state.theme === "dark"
                 ? "text-gray-300 bg-gray-700/50 border border-gray-600 hover:border-teal-400/50"
-                : "text-ubuntu-muted bg-white/70 border border-ubuntu-border shadow-sm hover:border-ubuntu-accent/50"
+                : "text-ubuntu-muted bg-white/70 border border-ubuntu-border shadow-xs hover:border-ubuntu-accent/50"
             }`}
           >
             <span className="inline-block w-2 h-2 bg-green-400 rounded-full mr-2 animate-heartbeat"></span>
@@ -255,7 +256,7 @@ export const Terminal: React.FC = () => {
           {/* Theme toggle */}
           <button
             onClick={handleThemeToggle}
-            className={`group px-3 py-2 rounded-lg text-sm font-ubuntu font-medium transition-all duration-300 transform hover:scale-110 active:scale-95 hover:rotate-3 touch-manipulation min-h-[44px] ${
+            className={`group cursor-pointer px-3 py-2 rounded-lg text-sm font-ubuntu font-medium transition-all duration-300 transform hover:scale-110 active:scale-95 hover:rotate-3 touch-manipulation min-h-[44px] ${
               state.theme === "dark"
                 ? "bg-gradient-to-r from-gray-700 to-gray-600 text-gray-200 hover:from-gray-600 hover:to-gray-500 border border-gray-500 shadow-lg hover:shadow-xl hover:shadow-teal-500/20"
                 : "bg-gradient-to-r from-ubuntu-button to-ubuntu-button-hover text-white hover:from-ubuntu-button-hover hover:to-red-600 shadow-lg hover:shadow-xl hover:shadow-ubuntu-accent/30"
@@ -322,7 +323,7 @@ export const Terminal: React.FC = () => {
 
                 {/* Hero Section */}
                 <div
-                  className={`p-4 rounded-lg backdrop-blur-sm animate-fade-in-up ${
+                  className={`p-4 rounded-lg backdrop-blur-xs animate-fade-in-up ${
                     state.theme === "dark"
                       ? "bg-gray-800/30 border border-gray-700/50"
                       : "bg-white/50 border border-ubuntu-border/50"
@@ -395,7 +396,7 @@ export const Terminal: React.FC = () => {
 
                 {/* Featured Projects Section */}
                 <div
-                  className={`p-4 rounded-lg backdrop-blur-sm animate-fade-in-up ${
+                  className={`p-4 rounded-lg backdrop-blur-xs animate-fade-in-up ${
                     state.theme === "dark"
                       ? "bg-gray-800/30 border border-gray-700/50"
                       : "bg-white/50 border border-ubuntu-border/50"
@@ -425,7 +426,7 @@ export const Terminal: React.FC = () => {
                     ].map((project, index) => (
                       <div
                         key={index}
-                        className={`p-3 rounded border-l-4 animate-project-card-entrance ${
+                        className={`p-3 rounded-smborder-l-4 animate-project-card-entrance ${
                           state.theme === "dark"
                             ? "bg-gray-700/30 border-l-teal-400 hover:bg-gray-700/50"
                             : "bg-gray-50/50 border-l-ubuntu-accent hover:bg-gray-50/80"
@@ -446,7 +447,7 @@ export const Terminal: React.FC = () => {
 
                 {/* Skills Overview */}
                 <div
-                  className={`p-4 rounded-lg backdrop-blur-sm animate-fade-in-up ${
+                  className={`p-4 rounded-lg backdrop-blur-xs animate-fade-in-up ${
                     state.theme === "dark"
                       ? "bg-gray-800/30 border border-gray-700/50"
                       : "bg-white/50 border border-ubuntu-border/50"
@@ -508,7 +509,7 @@ export const Terminal: React.FC = () => {
 
                 {/* Social Links */}
                 <div
-                  className={`p-4 rounded-lg backdrop-blur-sm animate-fade-in-up ${
+                  className={`p-4 rounded-lg backdrop-blur-xs animate-fade-in-up ${
                     state.theme === "dark"
                       ? "bg-gray-800/30 border border-gray-700/50"
                       : "bg-white/50 border border-ubuntu-border/50"
@@ -560,7 +561,7 @@ export const Terminal: React.FC = () => {
                 >
                   Type{" "}
                   <kbd
-                    className={`px-2 py-1 rounded font-semibold transition-all duration-300 hover:scale-110 animate-glow touch-manipulation ${
+                    className={`px-2 py-1 rounded-sm font-semibold transition-all duration-300 hover:scale-110 animate-glow touch-manipulation ${
                       state.theme === "dark"
                         ? "bg-teal-500/20 text-teal-300 border border-teal-500/30 hover:bg-teal-500/30"
                         : "bg-ubuntu-accent/10 text-ubuntu-accent border border-ubuntu-accent/30 hover:bg-ubuntu-accent/20"
@@ -605,18 +606,18 @@ export const Terminal: React.FC = () => {
           )}
 
           {/* Command history */}
-          <OutputDisplay outputs={state.outputHistory} typingEnabled={true} />
+          <OutputDisplay outputs={state.outputHistory} />
 
           {/* Processing indicator */}
           {state.isProcessingCommand && (
             <div
-              className={`flex items-center mt-4 p-4 rounded-lg backdrop-blur-sm animate-fade-in-up ${
+              className={`flex items-center mt-4 p-4 rounded-lg backdrop-blur-xs animate-fade-in-up ${
                 state.theme === "dark"
                   ? "text-teal-400 bg-teal-500/10 border border-teal-500/30 shadow-lg shadow-teal-500/20"
                   : "text-ubuntu-accent bg-ubuntu-accent/10 border border-ubuntu-accent/30 shadow-lg shadow-ubuntu-accent/20"
               }`}
             >
-              <div className="relative mr-4 flex-shrink-0">
+              <div className="relative mr-4 shrink-0">
                 <div
                   className={`animate-spin rounded-full h-6 w-6 border-2 border-transparent ${
                     state.theme === "dark"
@@ -653,10 +654,11 @@ export const Terminal: React.FC = () => {
         </div>
 
         {/* Fixed command input at bottom */}
-        <div className="flex-shrink-0 p-4 border-t transition-all duration-500">
+        <div className="shrink-0 p-4 transition-all duration-500">
           <CommandLine
             onExecuteCommand={handleExecuteCommand}
             disabled={state.isProcessingCommand}
+            state={state}
           />
         </div>
       </div>

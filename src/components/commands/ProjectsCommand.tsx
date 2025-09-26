@@ -1,5 +1,5 @@
 import React from "react";
-import { Project } from "../../types/terminal";
+import type { Project } from "../../types/terminal";
 
 interface ProjectsCommandProps {
   projects: Project[];
@@ -36,13 +36,13 @@ export const ProjectsCommand: React.FC<ProjectsCommandProps> = ({
 
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h2 className="text-xl font-bold text-teal-400 mb-4">
           📁 Available Projects
         </h2>
 
         <div className="space-y-4">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <div key={project.id} className="border-l-2 border-teal-400 pl-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-gray-400">[{project.id}]</span>
@@ -60,7 +60,7 @@ export const ProjectsCommand: React.FC<ProjectsCommandProps> = ({
                 {project.technologies.slice(0, 4).map((tech, techIndex) => (
                   <span
                     key={techIndex}
-                    className="text-xs bg-gray-700 text-teal-300 px-2 py-1 rounded"
+                    className="text-xs bg-gray-700 text-teal-300 px-2 py-1 rounded-sm"
                   >
                     {tech}
                   </span>
@@ -85,7 +85,7 @@ export const ProjectsCommand: React.FC<ProjectsCommandProps> = ({
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           📊 Project Statistics
         </h3>

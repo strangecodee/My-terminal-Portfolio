@@ -1,5 +1,5 @@
 import React from "react";
-import { systemInfo } from "../../data/mockData";
+import { portfolioData } from "../../data/mockData";
 
 export const ExperienceCommand: React.FC = () => {
   const achievements = [
@@ -33,23 +33,14 @@ export const ExperienceCommand: React.FC = () => {
     },
   ];
 
-  const technicalHighlights = [
-    "Hands-on experience with AWS EC2, S3, IAM, and VPC configuration",
-    "Implemented security best practices for cloud infrastructure",
-    "Automated deployment processes reducing manual intervention by 80%",
-    "Configured monitoring and alerting systems using CloudWatch",
-    "Collaborated with development teams on DevOps best practices",
-    "Optimized cloud costs through resource management and automation",
-  ];
-
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h2 className="text-xl font-bold text-teal-400 mb-4">
           💼 Professional Experience
         </h2>
 
-        {systemInfo.experience.map((exp, index) => (
+        {portfolioData.experience.map((exp, index) => (
           <div
             key={index}
             className="mb-6 border border-gray-600 p-4 rounded-lg"
@@ -64,87 +55,37 @@ export const ExperienceCommand: React.FC = () => {
               <div className="text-gray-400 text-sm">{exp.duration}</div>
             </div>
 
-            {exp.company === "RannLab Technologies" && (
-              <div className="space-y-4">
-                <div className="bg-gray-800 p-3 rounded">
-                  <h4 className="text-teal-400 font-semibold mb-2">
-                    Role Overview
-                  </h4>
-                  <p className="text-gray-300 text-sm leading-relaxed">
-                    Worked as an AWS Cloud Intern focusing on cloud
-                    infrastructure, automation, and DevOps practices. Gained
-                    hands-on experience with AWS services, infrastructure as
-                    code, and deployment automation.
-                  </p>
-                </div>
+            <div className="space-y-4">
+              <div className="bg-gray-800 p-3 rounded-sm">
+                <h4 className="text-teal-400 font-semibold mb-2">
+                  Role Overview
+                </h4>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  {exp.description}
+                </p>
+              </div>
 
-                <div>
-                  <h4 className="text-teal-400 font-semibold mb-3">
-                    Key Responsibilities & Achievements
-                  </h4>
-                  <div className="space-y-2">
-                    {technicalHighlights.map((highlight, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <span className="text-teal-400 mt-1">▶</span>
-                        <span className="text-gray-300 text-sm">
-                          {highlight}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-teal-400 font-semibold mb-3">
-                    Technologies Used
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      "AWS EC2",
-                      "AWS S3",
-                      "AWS IAM",
-                      "AWS VPC",
-                      "CloudWatch",
-                      "Terraform",
-                      "Jenkins",
-                      "Docker",
-                      "Linux",
-                      "Python",
-                      "Bash",
-                    ].map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="bg-gray-700 text-teal-300 px-2 py-1 rounded text-xs"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+              <div>
+                <h4 className="text-teal-400 font-semibold mb-3">
+                  Technologies Used
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {exp.technologies.map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-gray-700 text-teal-300 px-2 py-1 rounded-sm text-xs"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
-            )}
-
-            {exp.company === "Self-Learning & Projects" && (
-              <div className="space-y-4">
-                <div className="bg-gray-800 p-3 rounded">
-                  <h4 className="text-teal-400 font-semibold mb-2">
-                    Self-Directed Learning Journey
-                  </h4>
-                  <p className="text-gray-300 text-sm leading-relaxed">
-                    Passionate about DevOps and cloud technologies, continuously
-                    learning through hands-on projects, online courses, and
-                    practical implementations. Built multiple projects to gain
-                    real-world experience in cloud infrastructure and
-                    automation.
-                  </p>
-                </div>
-              </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-4">
           🏆 Key Achievements
         </h3>
@@ -170,7 +111,7 @@ export const ExperienceCommand: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           📈 Professional Growth
         </h3>

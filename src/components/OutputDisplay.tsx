@@ -4,13 +4,9 @@ import { useTerminal } from "../hooks/useTerminal";
 
 interface OutputDisplayProps {
   outputs: CommandOutput[];
-  typingEnabled?: boolean;
 }
 
-export const OutputDisplay: React.FC<OutputDisplayProps> = ({
-  outputs,
-  typingEnabled = true,
-}) => {
+export const OutputDisplay: React.FC<OutputDisplayProps> = ({ outputs }) => {
   const { state } = useTerminal();
   const [visibleOutputs, setVisibleOutputs] = useState<Set<string>>(new Set());
 
@@ -41,7 +37,7 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
           >
             {/* Enhanced responsive command input echo */}
             <div
-              className={`flex items-start sm:items-center font-mono p-2 sm:p-3 rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-[1.01] animate-slide-in-left ${
+              className={`flex items-start sm:items-center font-mono p-2 sm:p-3 rounded-lg backdrop-blur-xs transition-all duration-300 hover:scale-[1.01] animate-slide-in-left ${
                 state.theme === "dark"
                   ? "text-green-400 bg-gray-800/20 border border-gray-700/30 hover:border-gray-600/50 hover:bg-gray-800/30"
                   : "text-ubuntu-dark bg-white/30 border border-ubuntu-border/30 hover:border-ubuntu-border/50 hover:bg-white/50"
@@ -50,7 +46,7 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
             >
               <div className="flex items-start sm:items-center flex-wrap flex-1 min-w-0">
                 {/* Responsive terminal prompt in output */}
-                <div className="flex items-center flex-shrink-0 text-xs sm:text-sm">
+                <div className="flex items-center shrink-0 text-xs sm:text-sm">
                   <span
                     className={`transition-all duration-300 hover:animate-pulse ${
                       state.theme === "dark"
@@ -97,7 +93,7 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
 
               {/* Responsive command timestamp */}
               <div
-                className={`ml-auto text-xs px-2 sm:px-3 py-1 rounded-full transition-all duration-300 hover:scale-110 animate-fade-in flex-shrink-0 mt-1 sm:mt-0 ${
+                className={`ml-auto text-xs px-2 sm:px-3 py-1 rounded-full transition-all duration-300 hover:scale-110 animate-fade-in shrink-0 mt-1 sm:mt-0 ${
                   state.theme === "dark"
                     ? "text-gray-400 bg-gray-700/50 hover:bg-gray-700/70"
                     : "text-ubuntu-muted bg-ubuntu-light/50 hover:bg-ubuntu-light/70"
@@ -126,20 +122,20 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
               style={{ animationDelay: `${index * 0.1 + 0.2}s` }}
             >
               <div
-                className={`p-3 sm:p-4 rounded-lg backdrop-blur-sm border transition-all duration-300 hover:scale-[1.005] animate-content-reveal overflow-x-auto ${
+                className={`p-3 sm:p-4 rounded-lg backdrop-blur-xs border transition-all duration-300 hover:scale-[1.005] animate-content-reveal overflow-x-auto ${
                   state.theme === "dark"
                     ? "bg-black/20 border-gray-700/30 hover:border-gray-600/50 hover:bg-black/30"
-                    : "bg-white/50 border-ubuntu-border/30 shadow-sm hover:border-ubuntu-border/50 hover:bg-white/70"
+                    : "bg-white/50 border-ubuntu-border/30 shadow-xs hover:border-ubuntu-border/50 hover:bg-white/70"
                 }`}
               >
                 <div className="text-xs sm:text-sm leading-relaxed">
-                  {output.output}
+                  {output?.output}
                 </div>
               </div>
             </div>
 
             {/* Enhanced responsive execution status */}
-            {output.executionTime && (
+            {output?.executionTime ? (
               <div
                 className={`flex flex-col sm:flex-row sm:items-center justify-between text-xs pl-2 sm:pl-4 gap-2 sm:gap-0 animate-fade-in-up ${
                   state.theme === "dark" ? "text-gray-500" : "text-ubuntu-muted"
@@ -148,7 +144,7 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
               >
                 <div className="flex items-center gap-2">
                   <div
-                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full animate-success-pulse flex-shrink-0 ${
+                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full animate-success-pulse shrink-0 ${
                       state.theme === "dark"
                         ? "bg-green-400"
                         : "bg-ubuntu-accent"
@@ -167,14 +163,14 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
                 >
                   <div className="flex items-center gap-1">
                     <span className="animate-spin-slow">⚡</span>
-                    <span>{output.executionTime}ms</span>
+                    <span>{output?.executionTime}ms</span>
                   </div>
                 </div>
               </div>
-            )}
+            ) : null}
 
             {/* Responsive separator line */}
-            {index < outputs.length - 1 && (
+            {index < outputs?.length - 1 && (
               <div
                 className={`border-b opacity-20 transition-all duration-500 animate-expand-width mx-2 sm:mx-0 ${
                   state.theme === "dark"

@@ -1,6 +1,15 @@
 import React from "react";
-import { SystemInfo } from "../../types/terminal";
+import type { SystemInfo } from "../../types/terminal";
 import { certifications } from "../../data/mockData";
+import {
+  dockerData,
+  kubernetesData,
+  awsData,
+  systemData,
+  jenkinsData,
+  networkData,
+  logSamples,
+} from "../../data/devopsData";
 
 interface AboutCommandProps {
   systemInfo: SystemInfo;
@@ -9,7 +18,7 @@ interface AboutCommandProps {
 export const AboutCommand: React.FC<AboutCommandProps> = ({ systemInfo }) => {
   return (
     <div className="space-y-4 text-green-400">
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h2 className="text-xl font-bold text-teal-400 mb-3">
           👨‍💻 System Information - Anurag Maurya
         </h2>
@@ -83,11 +92,11 @@ export const AboutCommand: React.FC<AboutCommandProps> = ({ systemInfo }) => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           🎯 Professional Summary
         </h3>
-        <div className="bg-gray-800 p-4 rounded">
+        <div className="bg-gray-800 p-4 rounded-sm">
           <p className="text-gray-300 leading-relaxed">
             <strong className="text-teal-400">Cloud & DevOps Engineer</strong>{" "}
             with hands-on AWS experience and dual cloud certifications.
@@ -101,7 +110,7 @@ export const AboutCommand: React.FC<AboutCommandProps> = ({ systemInfo }) => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           🏆 Professional Certifications
         </h3>
@@ -113,7 +122,7 @@ export const AboutCommand: React.FC<AboutCommandProps> = ({ systemInfo }) => {
                 <span className={`font-semibold ${cert.color}`}>
                   {cert.name}
                 </span>
-                <span className="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">
+                <span className="bg-green-600 text-white px-2 py-1 rounded-sm text-xs font-bold">
                   CERTIFIED
                 </span>
               </div>
@@ -128,7 +137,7 @@ export const AboutCommand: React.FC<AboutCommandProps> = ({ systemInfo }) => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           ☁️ DevOps & Cloud Skills
         </h3>
@@ -142,7 +151,7 @@ export const AboutCommand: React.FC<AboutCommandProps> = ({ systemInfo }) => {
         </div>
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           💼 Professional Experience
         </h3>
@@ -165,7 +174,7 @@ export const AboutCommand: React.FC<AboutCommandProps> = ({ systemInfo }) => {
         ))}
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">🎓 Education</h3>
         {systemInfo.education.map((edu, index) => (
           <div key={index} className="mb-2 border-l-2 border-teal-400 pl-4">
@@ -176,22 +185,193 @@ export const AboutCommand: React.FC<AboutCommandProps> = ({ systemInfo }) => {
         ))}
       </div>
 
-      <div className="border border-green-400 p-4 rounded">
+      <div className="border border-green-400 p-4 rounded-sm">
         <h3 className="text-lg font-bold text-teal-400 mb-3">
           📈 Career Highlights
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center bg-gray-800 p-3 rounded">
+          <div className="text-center bg-gray-800 p-3 rounded-sm">
             <div className="text-2xl font-bold text-green-400">4</div>
             <div className="text-sm text-gray-400">Months AWS Experience</div>
           </div>
-          <div className="text-center bg-gray-800 p-3 rounded">
+          <div className="text-center bg-gray-800 p-3 rounded-sm">
             <div className="text-2xl font-bold text-blue-400">2</div>
             <div className="text-sm text-gray-400">Cloud Certifications</div>
           </div>
-          <div className="text-center bg-gray-800 p-3 rounded">
+          <div className="text-center bg-gray-800 p-3 rounded-sm">
             <div className="text-2xl font-bold text-orange-400">5+</div>
             <div className="text-sm text-gray-400">DevOps Projects</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Enhanced Live System Status */}
+      <div className="border border-green-400 p-4 rounded-sm">
+        <h3 className="text-lg font-bold text-teal-400 mb-3">
+          🐳 Live System Status
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-gray-800 p-3 rounded-sm">
+            <h4 className="text-blue-400 font-semibold mb-2">
+              Docker Containers ({dockerData.containers.length})
+            </h4>
+            <div className="space-y-1 text-sm">
+              {dockerData.containers.map((container, index) => (
+                <div key={index} className="flex justify-between text-gray-300">
+                  <span className="truncate">{container.names}</span>
+                  <span className="text-green-400">{container.status}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-gray-800 p-3 rounded-sm">
+            <h4 className="text-green-400 font-semibold mb-2">
+              Kubernetes Pods ({kubernetesData.pods.length})
+            </h4>
+            <div className="space-y-1 text-sm">
+              {kubernetesData.pods.map((pod, index) => (
+                <div key={index} className="flex justify-between text-gray-300">
+                  <span className="truncate">{pod.name.split("-")[0]}</span>
+                  <span className="text-green-400">{pod.status}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="border border-green-400 p-4 rounded-sm">
+        <h3 className="text-lg font-bold text-teal-400 mb-3">
+          ☁️ AWS Infrastructure
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-gray-800 p-3 rounded-sm">
+            <h4 className="text-orange-400 font-semibold mb-2">
+              EC2 Instances ({awsData.ec2Instances.length})
+            </h4>
+            <div className="space-y-1 text-sm">
+              {awsData.ec2Instances.map((instance, index) => (
+                <div key={index} className="flex justify-between text-gray-300">
+                  <span>{instance.instanceType}</span>
+                  <span className="text-green-400">{instance.state}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-gray-800 p-3 rounded-sm">
+            <h4 className="text-purple-400 font-semibold mb-2">
+              S3 Buckets ({awsData.s3Buckets.length})
+            </h4>
+            <div className="space-y-1 text-sm">
+              {awsData.s3Buckets.map((bucket, index) => (
+                <div key={index} className="text-gray-300">
+                  {bucket.name}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* System Resources */}
+      <div className="border border-green-400 p-4 rounded-sm">
+        <h3 className="text-lg font-bold text-teal-400 mb-3">
+          💻 System Resources
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-gray-800 p-3 rounded-sm">
+            <h4 className="text-yellow-400 font-semibold mb-2">Memory Usage</h4>
+            <div className="space-y-1 text-sm">
+              <div className="flex justify-between text-gray-300">
+                <span>Total:</span>
+                <span>{systemData.memoryUsage.total}MB</span>
+              </div>
+              <div className="flex justify-between text-gray-300">
+                <span>Used:</span>
+                <span>{systemData.memoryUsage.used}MB</span>
+              </div>
+              <div className="flex justify-between text-gray-300">
+                <span>Free:</span>
+                <span>{systemData.memoryUsage.free}MB</span>
+              </div>
+              <div className="flex justify-between text-gray-300">
+                <span>Available:</span>
+                <span>{systemData.memoryUsage.available}MB</span>
+              </div>
+            </div>
+          </div>
+          <div className="bg-gray-800 p-3 rounded-sm">
+            <h4 className="text-blue-400 font-semibold mb-2">Disk Usage</h4>
+            <div className="space-y-1 text-sm">
+              {systemData.diskUsage.map((disk, index) => (
+                <div key={index} className="flex justify-between text-gray-300">
+                  <span>{disk.filesystem}</span>
+                  <span className="text-green-400">{disk.usePercent}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Jenkins Jobs */}
+      <div className="border border-green-400 p-4 rounded-sm">
+        <h3 className="text-lg font-bold text-teal-400 mb-3">
+          🔄 Jenkins CI/CD Status
+        </h3>
+        <div className="bg-gray-800 p-3 rounded-sm">
+          <div className="space-y-2 text-sm">
+            {jenkinsData.jobs.map((job, index) => (
+              <div key={index} className="flex justify-between items-center">
+                <span className="text-gray-300">{job.name}</span>
+                <span
+                  className={`px-2 py-1 rounded-sm text-xs ${
+                    job.status === "SUCCESS"
+                      ? "bg-green-600 text-white"
+                      : job.status === "RUNNING"
+                      ? "bg-yellow-600 text-white"
+                      : "bg-red-600 text-white"
+                  }`}
+                >
+                  {job.status}
+                </span>
+                <span className="text-gray-400">#{job.lastBuild}</span>
+                <span className="text-gray-400">{job.duration}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Network Connections */}
+      <div className="border border-green-400 p-4 rounded-sm">
+        <h3 className="text-lg font-bold text-teal-400 mb-3">
+          🌐 Network Connections
+        </h3>
+        <div className="bg-gray-800 p-3 rounded-sm">
+          <div className="space-y-1 text-sm font-mono">
+            {networkData.connections.map((conn, index) => (
+              <div key={index} className="text-gray-300">
+                {conn.proto} {conn.localAddress} {conn.foreignAddress}{" "}
+                {conn.state}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Recent Logs */}
+      <div className="border border-green-400 p-4 rounded-sm">
+        <h3 className="text-lg font-bold text-teal-400 mb-3">
+          📋 Recent Application Logs
+        </h3>
+        <div className="bg-gray-900 p-3 rounded-sm">
+          <div className="space-y-1 text-sm font-mono">
+            {logSamples.application.map((log, index) => (
+              <div key={index} className="text-gray-300">
+                {log}
+              </div>
+            ))}
           </div>
         </div>
       </div>
