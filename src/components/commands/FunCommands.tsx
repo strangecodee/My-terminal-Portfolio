@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 export const JokeCommand: React.FC = () => {
   const [joke, setJoke] = React.useState({ text: "", punchline: "" });
@@ -219,7 +219,7 @@ export const QuoteCommand: React.FC = () => {
       },
       {
         text: "Infrastructure as code is the future of DevOps.",
-        author: "Unknown",
+        author: "Anurag",
       },
       {
         text: "Automate all the things!",
@@ -282,15 +282,19 @@ export const AsciiArtCommand: React.FC = () => (
     <div className="text-pink-400 font-semibold">🎨 ASCII Art</div>
     <div className="bg-gray-900/50 p-3 rounded-lg border border-gray-700">
       <pre className="text-green-400 font-mono text-xs">
-        {`     _______
-    /       \\
-   |  DevOps  |
-    \\_______/
-       | |
-       | |
-      /   \\
-     |     |
-      \\___/`}
+        {`                                                  
+               +++  +++++          :+++++ ++++              
+             ++++++ +++++++      =++++++= ++++++            
+            +++++      =+++++   ++++++      +++++           
+           ++++          +++++ +++++          ++++          
+          ++++:           ++ +++++-           ++++:         
+           ++               +++ +               +=          
+          ++ +:           +++++ =+:           ++ +-         
+           ++++          +++++ +++++          ++++          
+            +++++      ++++++   ++++++      +++++           
+             +++++++ ++++++      =++++++ +++++++            
+               ++++++ +++          -+++ ++++++                                                             
+        `}
       </pre>
     </div>
     <div className="text-gray-500 text-sm">
@@ -299,31 +303,65 @@ export const AsciiArtCommand: React.FC = () => (
   </div>
 );
 
-export const MatrixCommand: React.FC = () => (
-  <div className="space-y-2">
-    <div className="text-green-400 font-semibold">🖥️ Matrix Mode</div>
-    <div className="bg-black p-3 rounded-lg border border-green-500">
-      <div className="font-mono text-xs text-green-400 space-y-1">
-        <div>
-          01010100 01101000 01100101 00100000 01001101 01100001 01110100
-          01110010 01101001 01111000
-        </div>
-        <div>
-          01101000 01100001 01110011 00100000 01111001 01101111 01110101
-          00101110 00101110 00101110
-        </div>
-        <div>
-          01010111 01100101 01101100 01100011 01101111 01101101 01100101
-          00100000 01110100 01101111
-        </div>
-        <div>
-          01110100 01101000 01100101 00100000 01110010 01100101 01100001
-          01101100 00100000 01110111 01101111 01110010 01101100 01100100
-        </div>
+export const MatrixCommand: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Fit the canvas to parent container
+    const resizeCanvas = () => {
+      canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
+      canvas.height = canvas.parentElement?.clientHeight || 400;
+    };
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%^&*";
+    const fontSize = 10; 
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    const draw = () => {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00FF00";
+      ctx.font = `${fontSize}px monospace`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    };
+
+    const interval = setInterval(draw, 50);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, []);
+
+  return (
+    <div className="space-y-2">
+      <div className="text-green-400 font-semibold text-lg">🖥️ Matrix Mode</div>
+      <div className="bg-black p-3 rounded-lg border border-green-500 relative h-[400px] w-full">
+        <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full rounded-lg" />
+      </div>
+      <div className="text-gray-500 text-sm">
+        💡 Welcome to matrix mode
       </div>
     </div>
-    <div className="text-gray-500 text-sm">
-      💡 Wake up, Neo... The Matrix has you
-    </div>
-  </div>
-);
+  );
+};
+
