@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-## technology stack
+# My-terminal-Portfolio
+## Technology stack
 
 This project is built with:
 
@@ -7,6 +7,7 @@ This project is built with:
 - TypeScript
 - React
 - shadcn-ui
+- radix-ui
 - Tailwind CSS
 
 All shadcn/ui components have been downloaded under `@/components/ui`.
@@ -65,6 +66,3 @@ pnpm run dev
 ```shell
 pnpm run build
 ```
-=======
-# My-terminal-Portfolio
->>>>>>> ddef01e10f59e3fb8ee34a50540491c621e19ba0
