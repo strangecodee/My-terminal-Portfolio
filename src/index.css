@@ -38,12 +38,12 @@
   --color-ubuntu-orange: hsl(14 100% 53%);
   --color-ubuntu-orange-dark: hsl(14 100% 43%);
   --color-ubuntu-purple: hsl(318 41% 38%);
-  --color-ubuntu-light-bg: hsl(0 0% 97%);
+  --color-ubuntu-light-bg: hsl(0 0% 98%);
   --color-ubuntu-text: hsl(0 0% 17%);
   --color-ubuntu-accent: hsl(14 100% 53%);
   --color-ubuntu-border: hsl(0 0% 89.8%);
-  --color-ubuntu-muted: hsl(0 0% 45 1%);
-  --color-ubuntu-light: hsl(0 0% 96 1%);
+  --color-ubuntu-muted: hsl(0 0% 40%);
+  --color-ubuntu-light: hsl(14 10% 95%);
   --color-ubuntu-dark: hsl(0 0% 17%);
   --color-ubuntu-close: hsl(0 84.2% 6 0.2%);
   --color-ubuntu-minimize: hsl(43 74% 66%);
@@ -191,6 +191,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .font-mono {
@@ -205,6 +206,19 @@
   .touch-manipulation {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Light mode specific polishes */
+  .light .animate-typewriter {
+    color: hsl(199 100% 35%); /* Darker teal for welcome ASCII in light mode */
+  }
+
+  .light .animate-stats-counter {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadows for stats cards */
+  }
+
+  .light .animate-project-card-entrance {
+    border-color: hsl(0 0% 80%); /* Light borders for project cards */
   }
 }
 

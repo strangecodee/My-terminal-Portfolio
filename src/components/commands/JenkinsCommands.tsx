@@ -111,7 +111,7 @@ export const JenkinsStatusCommand: React.FC = () => {
             <div className="flex justify-between items-center mb-2">
               <span className="text-blue-400 font-semibold">{job.name}</span>
               <span
-                className={`px-2 py-1 rounded-sm text-xs font-semibold ${
+                className={`px-2 py-1 rounded text-xs font-semibold ${
                   job.status === "SUCCESS"
                     ? "bg-green-500/20 text-green-400"
                     : job.status === "RUNNING"

@@ -4,8 +4,12 @@ import { kubernetesData, manifestExamples } from "../../data/devopsData";
 export const KubectlGetPodsCommand: React.FC = () => {
   return (
     <div className="space-y-3">
-      <div className="text-green-400 font-semibold">
-        NAME READY STATUS RESTARTS AGE
+      <div className="text-green-400 font-semibold grid grid-cols-5 gap-4 mb-2">
+        <span>NAME</span>
+        <span>READY</span>
+        <span>STATUS</span>
+        <span>RESTARTS</span>
+        <span>AGE</span>
       </div>
       {kubernetesData.pods.map((pod, index) => (
         <div
@@ -49,8 +53,13 @@ export const KubectlGetPodsCommand: React.FC = () => {
 export const KubectlGetServicesCommand: React.FC = () => {
   return (
     <div className="space-y-3">
-      <div className="text-green-400 font-semibold">
-        NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE
+      <div className="text-green-400 font-semibold grid grid-cols-6 gap-3 mb-2">
+        <span>NAME</span>
+        <span>TYPE</span>
+        <span>CLUSTER-IP</span>
+        <span>EXTERNAL-IP</span>
+        <span>PORT(S)</span>
+        <span>AGE</span>
       </div>
       {kubernetesData.services.map((service, index) => (
         <div
@@ -87,8 +96,10 @@ export const KubectlGetServicesCommand: React.FC = () => {
 export const KubectlGetDeploymentsCommand: React.FC = () => {
   return (
     <div className="space-y-3">
-      <div className="text-green-400 font-semibold">
-        NAME READY UP-TO-DATE AVAILABLE AGE
+      <div className="text-green-400 font-semibold grid grid-cols-5 gap-4 mb-2">
+        <span>NAME</span>
+        <span>READY</span> <span>UP-TO-DATE</span> <span>AVAILABLE</span>{" "}
+        <span>AGE</span>
       </div>
       {kubernetesData.deployments.map((deployment, index) => (
         <div

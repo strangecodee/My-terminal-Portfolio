@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useGitHubStats } from "../services/githubApi";
 import { useTerminal } from "../hooks/useTerminal";
 import { CommandProcessor } from "./CommandProcessor";
 import { CommandLine } from "./CommandLine";
@@ -21,6 +22,8 @@ export const Terminal: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [bootSequence, setBootSequence] = useState<string[]>([]);
+
+  const { stats, loading, error } = useGitHubStats("strangecodee");
 
   useEffect(() => {
     // Set initial theme and simulate realistic boot sequence
@@ -87,7 +90,10 @@ export const Terminal: React.FC = () => {
         }
       }
 
-      const result = await commandProcessor.processCommand(command);
+      const result = await commandProcessor.processCommand(
+        command,
+        state.theme
+      );
 
       if (result.output !== null) {
         addOutput(command, result.output, result.executionTime);
@@ -95,7 +101,11 @@ export const Terminal: React.FC = () => {
     } catch (error) {
       addOutput(
         command,
-        <div className="text-red-400 animate-shake">
+        <div
+          className={`${
+            state.theme === "dark" ? "text-red-400" : "text-red-600"
+          } animate-shake`}
+        >
           <div className="flex items-center gap-2">
             <span className="animate-pulse">❌</span>
             Error:{" "}
@@ -354,7 +364,15 @@ export const Terminal: React.FC = () => {
                         : "bg-blue-100/50 border border-blue-200/50"
                     }`}
                   >
-                    <div className="text-lg font-bold text-blue-400">22+</div>
+                    <div className="text-lg font-bold text-blue-400">
+                      {loading ? (
+                        <span className="animate-pulse">Loading...</span>
+                      ) : error ? (
+                        "22+"
+                      ) : (
+                        `${stats?.totalRepos || 22}+`
+                      )}
+                    </div>
                     <div className="text-xs opacity-80">Projects</div>
                   </div>
                   <div
@@ -365,7 +383,15 @@ export const Terminal: React.FC = () => {
                     }`}
                     style={{ animationDelay: "0.1s" }}
                   >
-                    <div className="text-lg font-bold text-green-400">89</div>
+                    <div className="text-lg font-bold text-green-400">
+                      {loading ? (
+                        <span className="animate-pulse">Loading...</span>
+                      ) : error ? (
+                        "89"
+                      ) : (
+                        stats?.totalStars || 89
+                      )}
+                    </div>
                     <div className="text-xs opacity-80">GitHub Stars</div>
                   </div>
                   <div
@@ -387,10 +413,8 @@ export const Terminal: React.FC = () => {
                     }`}
                     style={{ animationDelay: "0.3s" }}
                   >
-                    <div className="text-lg font-bold text-orange-400">
-                      156+
-                    </div>
-                    <div className="text-xs opacity-80">Days Experience</div>
+                    <div className="text-lg font-bold text-orange-400">1+</div>
+                    <div className="text-xs opacity-80">Years Experience</div>
                   </div>
                 </div>
 

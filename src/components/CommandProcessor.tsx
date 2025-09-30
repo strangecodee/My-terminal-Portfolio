@@ -16,11 +16,11 @@ import {
   KubectlApplyCommand,
 } from "./commands/KubernetesCommands";
 import {
-  AwsS3LsCommand,
   AwsEc2DescribeInstancesCommand,
   AwsLambdaListFunctionsCommand,
   AwsIamListUsersCommand,
   AwsCloudFormationListStacksCommand,
+  AwsS3LsCommand,
 } from "./commands/AwsCommands";
 import {
   TerraformPlanCommand,
@@ -37,6 +37,7 @@ import {
   FreeCommand,
   NetstatCommand,
   TailLogsCommand,
+  UptimeCommand,
 } from "./commands/SystemCommands";
 import { SystemMonitorCommand } from "./commands/SystemMonitorCommand";
 import {
@@ -51,12 +52,28 @@ import {
   JenkinsStatusCommand,
   JenkinsLogsCommand,
 } from "./commands/JenkinsCommands";
+import {
+  JokeCommand,
+  WeatherCommand,
+  AsciiArtCommand,
+  MatrixCommand,
+} from "./commands/FunCommands";
+import {
+  HelpCommand,
+  ClearCommand,
+  HistoryCommand,
+} from "./commands/BasicCommands";
 
 // Import existing portfolio data
-import { portfolioData, asciiArt } from "../data/mockData";
+import { asciiArt } from "../data/mockData";
+import { portfolioData } from "../data/mockData";
 
 export class CommandProcessor {
-  async processCommand(command: string): Promise<CommandResult> {
+  async processCommand(
+    command: string,
+    _theme: "dark" | "light" = "dark"
+  ): Promise<CommandResult> {
+    // Theme parameter available for future theming enhancements
     const startTime = Date.now();
     const [cmd, ...args] = command.toLowerCase().split(" ");
 
@@ -89,6 +106,27 @@ export class CommandProcessor {
           output = this.handleJenkinsCommand(args);
           break;
 
+        // Git Commands
+        case "git":
+          output = this.handleGitCommand(args);
+          break;
+
+        // Google Cloud Commands
+        case "gcloud":
+          output = this.handleGcloudCommand(args);
+          break;
+
+        // Java Commands
+        case "java":
+          output = this.handleJavaCommand(args);
+          break;
+
+        // Python Commands
+        case "python":
+        case "python3":
+          output = this.handlePythonCommand(args);
+          break;
+
         // System Monitoring Commands
         case "top":
           output = <TopCommand />;
@@ -107,11 +145,7 @@ export class CommandProcessor {
           );
           break;
         case "ps":
-          if (args.includes("aux")) {
-            output = <PsAuxCommand />;
-          } else {
-            output = <PsAuxCommand />;
-          }
+          output = <PsAuxCommand />;
           break;
         case "df":
           output = <DfCommand />;
@@ -123,23 +157,7 @@ export class CommandProcessor {
           output = <NetstatCommand />;
           break;
         case "uptime":
-          output = (
-            <div className="space-y-2">
-              <div className="text-teal-400 font-semibold">
-                ⏱️ System Uptime
-              </div>
-              <div className="font-mono text-sm text-gray-300">
-                <div>
-                  {" "}
-                  14:32:45 up 3 days, 2:15, 1 user, load average: 0.45, 0.62,
-                  0.58
-                </div>
-              </div>
-              <div className="text-gray-500 text-sm">
-                💡 System has been running for 3 days, 2 hours, and 15 minutes
-              </div>
-            </div>
-          );
+          output = <UptimeCommand />;
           break;
         case "system":
         case "monitor":
@@ -165,12 +183,7 @@ export class CommandProcessor {
 
         // Log Commands
         case "tail":
-          if (args.includes("-f")) {
-            const logFile = args[args.length - 1];
-            output = <TailLogsCommand logFile={logFile} />;
-          } else {
-            output = <TailLogsCommand logFile={args[args.length - 1]} />;
-          }
+          output = <TailLogsCommand logFile={args[args.length - 1]} />;
           break;
         case "grep":
           output = this.handleGrepCommand(args);
@@ -206,12 +219,12 @@ export class CommandProcessor {
           }
           break;
 
-        // Portfolio Commands (existing)
+        // Portfolio Commands
         case "welcome":
           output = this.getWelcomeOutput();
           break;
         case "help":
-          output = this.getHelpOutput();
+          output = <HelpCommand />;
           break;
         case "about":
           output = this.getAboutOutput();
@@ -242,11 +255,34 @@ export class CommandProcessor {
           break;
 
         // Fun Commands
+        case "fun":
+          output = this.getFunCommandsOutput();
+          break;
         case "fortune":
           output = this.getFortuneOutput();
           break;
+        case "joke":
+          output = <JokeCommand />;
+          break;
+        case "weather":
+          output = <WeatherCommand location={args[0]} />;
+          break;
+        case "ascii":
+          output = <AsciiArtCommand />;
+          break;
+        case "matrix":
+          output = <MatrixCommand />;
+          break;
         case "cowsay":
           output = this.getCowsayOutput(args.join(" "));
+          break;
+
+        // Basic Commands
+        case "clear":
+          output = <ClearCommand />;
+          break;
+        case "history":
+          output = <HistoryCommand />;
           break;
 
         default:
@@ -623,6 +659,498 @@ export class CommandProcessor {
     );
   }
 
+  private handleJavaCommand(args: string[]): React.ReactNode {
+    const subCommand = args[0];
+
+    return (
+      <div className="space-y-3">
+        <div>
+          {(() => {
+            switch (subCommand) {
+              case "-version":
+                return (
+                  <div className="space-y-1 text-sm">
+                    <div className="text-blue-400">
+                      java version "17.0.8" 2023-07-18 LTS
+                    </div>
+                    <div className="text-gray-300">
+                      Java(TM) SE Runtime Environment (build 17.0.8+9-LTS-211)
+                    </div>
+                    <div className="text-gray-300">
+                      Java HotSpot(TM) 64-Bit Server VM (build 17.0.8+9-LTS-211,
+                      mixed mode, sharing)
+                    </div>
+                  </div>
+                );
+              default:
+                return (
+                  <div className="text-red-400">
+                    Unknown java command: {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: -version
+                    </div>
+                  </div>
+                );
+            }
+          })()}
+        </div>
+      </div>
+    );
+  }
+
+  private handleGitCommand(args: string[]): React.ReactNode {
+    const subCommand = args[0];
+
+    return (
+      <div className="space-y-3">
+        <pre className="text-green-400 text-xs leading-tight">{`git`}</pre>
+        <div>
+          {(() => {
+            switch (subCommand) {
+              case "status":
+                return (
+                  <div className="space-y-2 text-sm">
+                    <div className="text-green-400 font-semibold">
+                      On branch main
+                    </div>
+                    <div className="text-gray-300">
+                      Your branch is up to date with 'origin/main'.
+                    </div>
+                    <div className="text-green-400">
+                      nothing to commit, working tree clean
+                    </div>
+                  </div>
+                );
+              case "checkout":
+                const branch = args[1] || "main";
+                return (
+                  <div className="space-y-1 text-sm">
+                    <div className="text-blue-400">
+                      Switched to branch '{branch}'
+                    </div>
+                    <div className="text-gray-300">
+                      Your branch is up to date with 'origin/{branch}'.
+                    </div>
+                  </div>
+                );
+              case "log":
+                return (
+                  <div className="font-mono p-4 rounded-lg border border-gray-700">
+                    <div className="text-yellow-400">
+                      commit abc123def456 (HEAD → main, origin/main)
+                    </div>
+                    <div className="text-gray-300">
+                      Author: Anurag Maurya &lt;anurag@example.com&gt;
+                    </div>
+                    <div className="text-gray-300">
+                      Date: Mon Sep 18 14:30:00 2023 +0530
+                    </div>
+                    <div className="text-gray-400">
+                      {" "}
+                      Update portfolio with latest projects
+                    </div>
+                  </div>
+                );
+              case "branch":
+                return (
+                  <div className="space-y-1 text-sm">
+                    <div className="text-green-400">* main</div>
+                    <div className="text-gray-300"> develop</div>
+                    <div className="text-gray-300"> feature/docker</div>
+                  </div>
+                );
+              default:
+                return (
+                  <div className="text-red-400">
+                    Unknown git command: {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: status, checkout, log, branch
+                    </div>
+                  </div>
+                );
+            }
+          })()}
+        </div>
+      </div>
+    );
+  }
+
+  gCloudBuckets = [
+    {
+      name: "devops-portfolio-assets",
+      creationDate: "2022-05-10",
+      region: "US-CENTRAL1",
+    },
+    {
+      name: "terraform-state-bucket",
+      creationDate: "2021-11-22",
+      region: "US",
+    },
+    {
+      name: "kubernetes-configs",
+      creationDate: "2023-01-15",
+      region: "US-EAST1",
+    },
+    {
+      name: "ci-cd-artifacts",
+      creationDate: "2022-08-30",
+      region: "US-WEST1",
+    },
+  ];
+
+  computeEngineInstances = [
+    {
+      name: "web-server-01",
+      zone: "us-central1-a",
+      machineType: "n1-standard-1",
+      internalIP: "10.128.0.10",
+      externalIP: "35.192.45.123",
+      status: "RUNNING",
+    },
+    {
+      name: "api-gateway-01",
+      zone: "us-central1-a",
+      machineType: "n1-standard-1",
+      internalIP: "10.128.0.11",
+      externalIP: "35.192.45.124",
+      status: "RUNNING",
+    },
+    {
+      name: "web-server-01",
+      zone: "us-central1-a",
+      machineType: "n1-standard-1",
+      internalIP: "10.128.0.12",
+      externalIP: "35.192.45.125",
+      status: "RUNNING",
+    },
+  ];
+
+  private handleGcloudCommand(args: string[]): React.ReactNode {
+    const service = args[0];
+    const subCommand = args[1];
+
+    return (
+      <div className="space-y-3">
+        <pre className="text-blue-400 text-xs leading-tight">
+          {asciiArt.gcloud || "gcloud"}
+        </pre>
+        <div>
+          {(() => {
+            switch (service) {
+              case "storage":
+                if (subCommand === "ls") {
+                  const bucketPath = args[2];
+                  if (bucketPath && bucketPath.startsWith("gs://")) {
+                    // List contents of specific bucket
+                    const bucketName = bucketPath
+                      .replace("gs://", "")
+                      .replace("/", "")
+                      .trim();
+                    const bucketExits = this.gCloudBuckets.some(
+                      (b) => b.name === bucketName
+                    );
+                    if (!bucketExits) {
+                      return (
+                        <div className="text-red-400 font-mono text-sm">
+                          ❌ ERROR: (gcloud.storage.ls) Bucket not found:{" "}
+                          {bucketName}
+                          <div className="text-gray-500 mt-1">
+                            💡 Use{" "}
+                            <code className="text-teal-400">
+                              gcloud storage ls
+                            </code>{" "}
+                            to see available buckets.
+                          </div>
+                        </div>
+                      );
+                    }
+                    const bucketContentsMap: Record<string, any[]> = {
+                      "devops-portfolio-assets": [
+                        {
+                          file: "resume.pdf",
+                          size: "95K",
+                          updated: "2023-08-10",
+                        },
+                        {
+                          file: "logo.png",
+                          size: "20K",
+                          updated: "2023-09-11",
+                        },
+                        {
+                          file: "project-screenshots/homepage.png",
+                          size: "340K",
+                          updated: "2023-09-11",
+                        },
+                        {
+                          file: "css/styles.css",
+                          size: "2.5K",
+                          updated: "2023-09-11",
+                        },
+                      ],
+                      "terraform-state-bucket": [
+                        {
+                          file: "main.tf",
+                          size: "3.2K",
+                          updated: "2023-09-05",
+                        },
+                        {
+                          file: "backend.tf",
+                          size: "2.0K",
+                          updated: "2023-09-04",
+                        },
+                        {
+                          file: "terraform.tfstate",
+                          size: "6.8K",
+                          updated: "2023-09-06",
+                        },
+                        {
+                          file: "terraform.tfvars",
+                          size: "1.5K",
+                          updated: "2023-09-06",
+                        },
+                      ],
+                      "kubernetes-configs": [
+                        {
+                          file: "deployment.yaml",
+                          size: "2.8K",
+                          updated: "2023-10-01",
+                        },
+                        {
+                          file: "service.yaml",
+                          size: "1.7K",
+                          updated: "2023-10-01",
+                        },
+                        {
+                          file: "ingress.yaml",
+                          size: "3.0K",
+                          updated: "2023-10-01",
+                        },
+                        {
+                          file: "namespace.yaml",
+                          size: "1.2K",
+                          updated: "2023-10-01",
+                        },
+                      ],
+                      "ci-cd-artifacts": [
+                        {
+                          file: "build.log",
+                          size: "12K",
+                          updated: "2023-09-29",
+                        },
+                        {
+                          file: "app.jar",
+                          size: "45MB",
+                          updated: "2023-09-29",
+                        },
+                        {
+                          file: "Dockerfile",
+                          size: "800B",
+                          updated: "2023-09-28",
+                        },
+                        {
+                          file: "jenkinsfile",
+                          size: "2.1K",
+                          updated: "2023-09-27",
+                        },
+                      ],
+                    };
+
+                    const bucketContents = bucketContentsMap[bucketName] || [];
+                    return (
+                      <div className="space-y-2">
+                        <div className="text-teal-400 font-semibold">
+                          📁 Contents of {bucketPath}
+                        </div>
+                        <div className="bg-gray-900/50 p-3 rounded-lg border border-gray-700 ">
+                          <div className="font-mono text-sm space-y-1 text-gray-300">
+                            <div className="text-green-600 grid grid-cols-3">
+                              <span>OBJECT_NAME</span> <span>SIZE</span>
+                              <span>UPDATED</span>
+                            </div>
+                            {bucketContents.map((item, index) => (
+                              <div className="grid grid-cols-3" key={index}>
+                                <span>{item.file}</span>
+                                <span>{item.size}</span>
+                                <span>{item.updated}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="text-gray-500 text-sm">
+                          💡 Found {bucketContents.length} objects in bucket "
+                          {bucketName}"
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    // List all buckets
+                    return (
+                      <div className="space-y-2">
+                        <div className="text-teal-400 font-semibold">
+                          ☁️ Google Cloud Storage Buckets
+                        </div>
+                        {this.gCloudBuckets.map((bucket, index) => (
+                          <div
+                            key={index}
+                            className="font-mono text-sm text-gray-300 hover:bg-gray-800/30 p-2 rounded grid grid-cols-6 gap-4"
+                          >
+                            <div className="cols-span-4">
+                              <span className="text-blue-400">🪣 </span>
+                              <span className="text-cyan-400">
+                                {bucket.name}
+                              </span>
+                            </div>
+                            <span className="text-gray-400 col-start-5">
+                              {bucket.creationDate}
+                            </span>
+                            <span className="text-yellow-400 col-start-6">
+                              {bucket.region}
+                            </span>
+                          </div>
+                        ))}
+                        <div className="text-gray-500 text-sm">
+                          💡 Use{" "}
+                          <code className="text-teal-400">
+                            gcloud storage ls gs://bucket-name
+                          </code>{" "}
+                          to list specific bucket contents
+                        </div>
+                      </div>
+                    );
+                  }
+                }
+                return (
+                  <div className="text-red-400">
+                    Unknown storage command: {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: ls
+                    </div>
+                  </div>
+                );
+              case "compute":
+                if (subCommand === "instances" && args[2] === "list") {
+                  return (
+                    <div className="space-y-2">
+                      <div className="text-teal-400 font-semibold">
+                        🖥️ Compute Engine Instances
+                      </div>
+                      <div className="bg-gray-900/50 p-3 rounded-lg border border-gray-700">
+                        <div className="font-mono text-xs space-y-1 text-gray-300">
+                          <div className="grid grid-cols-7 space-y-2 mb-2 text-green-600">
+                            <span>NAME</span> <span>ZONE</span>{" "}
+                            <span>MACHINE_TYPE</span> <span>INTERNAL_IP</span>
+                            <span>EXTERNAL_IP</span> <span>STATUS</span>
+                          </div>
+                          {this.computeEngineInstances.map((c, idx) => (
+                            <div className="grid grid-cols-7" key={idx}>
+                              <span>{c.name}</span>
+                              <span>{c.zone}</span>
+                              <span>{c.machineType}</span>
+                              <span>{c.internalIP}</span>
+                              <span>{c.externalIP}</span>
+                              <span>{c.status}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <div className="text-red-400">
+                    Unknown compute command: {subCommand} {args[2]}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: instances list
+                    </div>
+                  </div>
+                );
+              case "projects":
+                if (subCommand === "list") {
+                  return (
+                    <div className="space-y-2">
+                      <div className="text-teal-400 font-semibold">
+                        📋 Google Cloud Projects
+                      </div>
+                      <div className="bg-gray-900/50 p-3 rounded-lg border border-gray-700">
+                        <div className="font-mono text-sm space-y-1 text-gray-300">
+                          <div>PROJECT_ID: devops-portfolio-project</div>
+                          <div>NAME: DevOps Portfolio Project</div>
+                          <div>PROJECT_NUMBER: 123456789012</div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <div className="text-red-400">
+                    Unknown projects command: {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: list
+                    </div>
+                  </div>
+                );
+              case "--version":
+                return (
+                  <div className="space-y-1 text-sm">
+                    <div className="text-blue-400">
+                      Google Cloud SDK 447.0.0
+                    </div>
+                    <div className="text-gray-300">bq 2.0.96</div>
+                    <div className="text-gray-300">core 2023.09.22</div>
+                    <div className="text-gray-300">gsutil 5.27</div>
+                  </div>
+                );
+              default:
+                return (
+                  <div className="text-red-400">
+                    Unknown gcloud command: {service} {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: storage ls, compute instances list, projects
+                      list, --version
+                    </div>
+                  </div>
+                );
+            }
+          })()}
+        </div>
+      </div>
+    );
+  }
+
+  private handlePythonCommand(args: string[]): React.ReactNode {
+    const subCommand = args[0];
+    return (
+      <div className="space-y-3">
+        <div>
+          {(() => {
+            switch (subCommand) {
+              case "--version":
+                return (
+                  <div className="space-y-1 text-sm">
+                    <div className="text-blue-400">Python 3.11.5</div>
+                    <div className="text-gray-300">[GCC 9.4.0] on linux</div>
+                    <div className="text-gray-300">
+                      Type "help", "copyright", "credits" or "license" for more
+                      information.
+                    </div>
+                  </div>
+                );
+              default:
+                return (
+                  <div className="text-red-400">
+                    Unknown python command: {subCommand}
+                    <div className="text-gray-400 text-sm mt-1">
+                      Available: --version
+                    </div>
+                  </div>
+                );
+            }
+          })()}
+        </div>
+      </div>
+    );
+  }
+
   private handleGrepCommand(args: string[]): React.ReactNode {
     const pattern = args[0];
     const file = args[1] || "/var/log/app.log";
@@ -769,148 +1297,6 @@ export class CommandProcessor {
         </div>
       );
     }
-  }
-
-  // Existing portfolio methods (keeping them as they were)
-  private getHelpOutput(): React.ReactNode {
-    return (
-      <div className="space-y-4">
-        <div className="text-teal-400 font-semibold text-lg">
-          📚 Available Commands
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* DevOps Commands */}
-          <div className="space-y-3">
-            <div className="text-blue-400 font-semibold">🐳 DevOps Tools</div>
-            <div className="space-y-1 text-sm">
-              <div>
-                <code className="text-teal-400">docker ps</code> - List running
-                containers
-              </div>
-              <div>
-                <code className="text-teal-400">docker images</code> - List
-                Docker images
-              </div>
-              <div>
-                <code className="text-teal-400">kubectl get pods</code> - List
-                Kubernetes pods
-              </div>
-              <div>
-                <code className="text-teal-400">aws s3 ls</code> - List S3
-                buckets
-              </div>
-              <div>
-                <code className="text-teal-400">terraform plan</code> - Show
-                infrastructure changes
-              </div>
-              <div>
-                <code className="text-teal-400">jenkins status</code> - Show
-                Jenkins jobs
-              </div>
-            </div>
-          </div>
-
-          {/* System Commands */}
-          <div className="space-y-3">
-            <div className="text-purple-400 font-semibold">
-              💻 System Monitoring
-            </div>
-            <div className="space-y-1 text-sm">
-              <div>
-                <code className="text-teal-400">top</code> - Process monitor
-              </div>
-              <div>
-                <code className="text-teal-400">ps aux</code> - List all
-                processes
-              </div>
-              <div>
-                <code className="text-teal-400">df -h</code> - Disk usage
-              </div>
-              <div>
-                <code className="text-teal-400">free -m</code> - Memory usage
-              </div>
-              <div>
-                <code className="text-teal-400">netstat -tulpn</code> - Network
-                connections
-              </div>
-            </div>
-          </div>
-
-          {/* Network Commands */}
-          <div className="space-y-3">
-            <div className="text-green-400 font-semibold">🌐 Network Tools</div>
-            <div className="space-y-1 text-sm">
-              <div>
-                <code className="text-teal-400">ping &lt;host&gt;</code> - Test
-                connectivity
-              </div>
-              <div>
-                <code className="text-teal-400">curl &lt;url&gt;</code> - HTTP
-                requests
-              </div>
-              <div>
-                <code className="text-teal-400">nslookup &lt;domain&gt;</code> -
-                DNS lookup
-              </div>
-              <div>
-                <code className="text-teal-400">traceroute &lt;host&gt;</code> -
-                Network path
-              </div>
-            </div>
-          </div>
-
-          {/* Portfolio Commands */}
-          <div className="space-y-3">
-            <div className="text-orange-400 font-semibold">👨‍💻 Portfolio</div>
-            <div className="space-y-1 text-sm">
-              <div>
-                <code className="text-teal-400">about</code> - About me
-              </div>
-              <div>
-                <code className="text-teal-400">skills</code> - Technical skills
-              </div>
-              <div>
-                <code className="text-teal-400">experience</code> - Work
-                experience
-              </div>
-              <div>
-                <code className="text-teal-400">projects</code> - My projects
-              </div>
-              <div>
-                <code className="text-teal-400">certifications</code> -
-                Certifications
-              </div>
-              <div>
-                <code className="text-teal-400">contact</code> - Contact
-                information
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 p-4 bg-gray-800/30 rounded-lg border border-gray-700">
-          <div className="text-yellow-400 font-semibold mb-2">💡 Pro Tips:</div>
-          <div className="space-y-1 text-sm text-gray-300">
-            <div>
-              • Use <kbd className="px-1 bg-gray-700 rounded-sm">↑↓</kbd> arrow
-              keys to navigate command history
-            </div>
-            <div>
-              • Press <kbd className="px-1 bg-gray-700 rounded-sm">Tab</kbd> for
-              command autocompletion
-            </div>
-            <div>
-              • Type <kbd className="px-1 bg-gray-700 rounded-sm">clear</kbd> to
-              clear the terminal
-            </div>
-            <div>
-              • All commands show realistic DevOps outputs and scenarios
-            </div>
-          </div>
-        </div>
-      </div>
-    );
   }
 
   private getAboutOutput(): React.ReactNode {
@@ -1316,6 +1702,52 @@ export class CommandProcessor {
     );
   }
 
+  private getFunCommandsOutput(): React.ReactNode {
+    return (
+      <div className="space-y-4">
+        <div className="text-purple-400 font-semibold text-lg">
+          🎉 Fun Commands
+        </div>
+        <div className="bg-gray-800/30 p-4 rounded-lg border border-purple-700 space-y-3">
+          <div className="text-yellow-400">
+            Try these entertaining commands:
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div className="space-y-1">
+              <div>
+                <code className="text-teal-400">joke</code> - Get a DevOps joke
+                😂
+              </div>
+              <div>
+                <code className="text-teal-400">fortune</code> - Inspirational
+                quote 💭
+              </div>
+              <div>
+                <code className="text-teal-400">weather</code> - Check the
+                weather 🌤️
+              </div>
+            </div>
+            <div className="space-y-1">
+              <div>
+                <code className="text-teal-400">ascii</code> - ASCII art 🎨
+              </div>
+              <div>
+                <code className="text-teal-400">matrix</code> - Matrix mode 🖥️
+              </div>
+              <div>
+                <code className="text-teal-400">cowsay &lt;message&gt;</code> -
+                Cow says moo 🐄
+              </div>
+            </div>
+          </div>
+          <div className="text-gray-500 text-sm mt-2">
+            💡 Type any of these for a break from serious DevOps work!
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   private getCowsayOutput(message: string): React.ReactNode {
     const text = message || "Hello from the DevOps world!";
     const border = "_".repeat(text.length + 2);
@@ -1414,7 +1846,7 @@ export class CommandProcessor {
                 arrow keys to navigate history
               </div>
               <div>
-                • All commands simulate real DevOps scenarios and outputs
+                • All commands show realistic DevOps outputs and scenarios
               </div>
               <div>
                 • This portfolio demonstrates practical DevOps knowledge and
